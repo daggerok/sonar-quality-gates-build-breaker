@@ -40,11 +40,11 @@ jobs:
     jdk: openjdk8
     name: test openjdk8
     script:
-    - ./mvnw -pl :docker docker-compose:up
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 30s
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -U >/dev/null
+    - sleep 40s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     - java -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt
   - stage: test
@@ -55,11 +55,11 @@ jobs:
     jdk: openjdk11
     name: test openjdk11
     script:
-    - ./mvnw -pl :docker docker-compose:up
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -U >/dev/null
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 30s
+    - sleep 40s
     - ./mvnw -P sonar ; java -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected...'
   - stage: test
     jdk: openjdk11

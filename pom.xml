@@ -50,10 +50,17 @@
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
     <scm>
-        <developerConnection>scm:git:git@github.com:daggerok/publish-maven-project-to-jcenter.git</developerConnection>
-        <connection>scm:git:https://github.com/daggerok/publish-maven-project-to-jcenter.git</connection>
-        <url>https://github.com/daggerok/publish-maven-project-to-jcenter.git</url>
+        <developerConnection>scm:git:git@github.com:daggerok/sonar-quality-gates-build-breaker.git</developerConnection>
+        <connection>scm:git:https://github.com/daggerok/sonar-quality-gates-build-breaker.git</connection>
+        <url>https://github.com/daggerok/sonar-quality-gates-build-breaker.git</url>
         <tag>master</tag>
     </scm>
 
