@@ -1,0 +1,6 @@
+projectKey=com.example:shitty-demo-project
+serverUrl=http://127.0.0.1
+serverVersion=7.9.1.27448
+dashboardUrl=http://127.0.0.1/dashboard?id=com.example%3Ashitty-demo-project
+ceTaskId=AW1MZwUHECj2C3N4AZDi
+ceTaskUrl=http://127.0.0.1/api/ce/task?id=AW1MZwUHECj2C3N4AZDi
