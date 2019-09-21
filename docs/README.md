@@ -20,6 +20,8 @@ _Easy as 1-2-3_
 
 TODO...
 
+@[code lang=yaml](@/../docker/docker-compose.yaml)
+
 ### Get SonarQube Build Breaker
 
 TODO...
