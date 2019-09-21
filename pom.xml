@@ -38,6 +38,7 @@
         <frontend-maven-plugin.npmVersion>6.11.3</frontend-maven-plugin.npmVersion>
         <frontend-maven-plugin.nodeVersion>v12.10.0</frontend-maven-plugin.nodeVersion>
 
+        <log4j.version>2.12.1</log4j.version>
         <lombok.version>1.18.10</lombok.version>
         <retrofit.version>2.6.1</retrofit.version>
         <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
@@ -89,6 +90,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
                 <version>${spring-boot-starter-parent.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

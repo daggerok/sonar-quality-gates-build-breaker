@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_DATE_FORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xEx</Property>
+        <Property name="LOG_PATTERN">%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %highlight{${LOG_LEVEL_PATTERN}} %style{%pid}{magenta} %style{---}{faint} %style{[ %10.10t ]}{faint} %style{%-20.20c}{cyan} %style{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <!-- <Property name="LOG_PATTERN">%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %highlight{${LOG_LEVEL_PATTERN}} %style{%pid}{magenta} %style{-&#45;&#45;}{faint} %style{[ %15.15t ]}{faint} %style{%22.22c{5.9}}{cyan} %style{:}{faint} %style{%-11.11M{6.4}}{magenta} %style{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property> -->
+        <!-- <Property name="LOG_PATTERN">%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{dim} %highlight{${LOG_LEVEL_PATTERN}} %style{${hostName}}{magenta} %pid %style{-&#45;&#45;}{dim} [ %t ] %-40.40c{9.} %style{%-22.22M}{magenta} %style{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property> -->
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <logger name="daggerok" level="ALL" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+        </logger>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

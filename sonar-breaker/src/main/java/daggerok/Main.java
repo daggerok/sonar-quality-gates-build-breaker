@@ -7,20 +7,18 @@ import daggerok.sonar.rest.api.ce.TaskResponse;
 import daggerok.sonar.rest.api.qualitygates.ProjectStatus;
 import daggerok.sonar.rest.api.qualitygates.ProjectStatusResponse;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import lombok.val;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static daggerok.infrastructure.Result.*;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static java.util.Arrays.fill;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -28,11 +26,12 @@ import static java.util.Objects.requireNonNull;
  * java -Dsonar.breaker.retry=25 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  * java -Dsonar.breaker.delay=5 -Dsonar.breaker.retry=5 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  */
+@Log4j2
 public class Main {
 
     @SneakyThrows
-    public static void main(final String[] args) {
-        requireNonNull(args, "args may not be null."); // internal check
+    public static void main(final String[] args) { // NOSONAR
+        requireNonNull(args, "args may not be null."); // internal use
 
         if (args.length != 1) {
             final String actual = String.join(", ", args);
@@ -69,13 +68,13 @@ public class Main {
 
             final TaskResponse body = response.body();
             final String status = requireNonNull(body, "oops 3.5").getTask().getStatus();
-            System.out.printf("%d attempts left for analysis (%s)%n", retry, status.toLowerCase().replaceAll("_", " "));
+            log.info("{} retries left for analysis ({})", retry, status.toLowerCase().replaceAll("_", " "));
 
             if (!asList("SUCCESS", "FAILED").contains(status)) {
                 TimeUnit.SECONDS.sleep(delay);
                 if (retry > 0) continue;
 
-                final String error = format("stop waiting after %s retries", maxRetries);
+                final String error = format("stop waiting after %s tries", maxRetries);
                 TIMEOUT_EXCEEDED.withMessage(error).fail();
                 return;
             }

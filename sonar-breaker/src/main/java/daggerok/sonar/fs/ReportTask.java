@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.FileInputStream;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
+@Log4j2
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReportTask {
 
@@ -27,7 +29,7 @@ public class ReportTask {
     }
 
     public void printBuildInfo() {
-        System.out.printf("%s%n%s",
+        log.info("{}\n{}",
                           "Start SonarQube build breaker analysis...",
                           dataHolder.entrySet()
                                     .stream()
