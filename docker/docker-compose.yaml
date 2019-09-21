@@ -8,7 +8,7 @@ volumes:
   logs: {}
 services:
   sonar:
-    image: sonarqube
+    image: sonarqube:7.9.1-community
     ports: ['80:9000']
     networks: [dev]
     volumes: ['conf:/opt/sonarqube/conf',
