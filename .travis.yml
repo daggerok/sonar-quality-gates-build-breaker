@@ -58,12 +58,28 @@ jobs:
     name: test openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
-    - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 30s
+    - sleep 60s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     - java -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt
+    after_script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
+    jdk: openjdk8
+    name: test sonar.breaker.retry openjdk8
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - wait_healthy_docker_containers 1
+    - echo wait a half of minute while sonarQube is selfconfiguring...
+    - sleep 45s
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
+    # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
+    - set +e
+    - java -Dsonar.breaker.retry=1 -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt
+    - exit_code=$?
+    - set -e
+    - test exit_code -eq 2
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
@@ -72,14 +88,18 @@ jobs:
     script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: test
     jdk: openjdk11
-    name: test openjdk11
+    name: test sonar.breaker.delay openjdk11
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
-    - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
     - sleep 30s
-    - ./mvnw -P sonar ; java -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected...'
+    # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
+    - set +e
+    - ./mvnw -P sonar ; java -Dsonar.breaker.delay=0 -Dsonar.breaker.retry=5 -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt
+    - exit_code=$?
+    - set -e
+    - test exit_code -eq 2
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
