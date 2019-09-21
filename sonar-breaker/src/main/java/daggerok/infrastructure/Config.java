@@ -9,9 +9,9 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Config {
 
-    public static String get(String prop, String defaultValue, String... args) {
-        String environmentVariableName = prop.replaceAll("\\.", "_").toUpperCase();
-        String environmentVariable = System.getenv().getOrDefault(environmentVariableName, defaultValue);
+    public static String get(final String prop, final String defaultValue, final String... args) {
+        final String environmentVariableName = prop.replaceAll("\\.", "_").toUpperCase();
+        final String environmentVariable = System.getenv().getOrDefault(environmentVariableName, defaultValue);
         return Arrays.stream(args)
                      .filter(Objects::nonNull)
                      .map(String::trim)

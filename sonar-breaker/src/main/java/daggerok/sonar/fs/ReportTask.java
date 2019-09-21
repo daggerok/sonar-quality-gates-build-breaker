@@ -18,11 +18,11 @@ import static java.util.stream.Collectors.joining;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReportTask {
 
-    private Map<String, String> dataHolder = new ConcurrentHashMap<>();
+    private final Map<String, String> dataHolder = new ConcurrentHashMap<>();
 
-    public static ReportTask of(String filePath) {
-        String path = Optional.ofNullable(filePath)
-                              .orElse(Config.get("sonar.report.task", "target/sonar/report-task.txt"));
+    public static ReportTask of(final String filePath) {
+        final String path = Optional.ofNullable(filePath)
+                                    .orElse(Config.get("sonar.report.task", "target/sonar/report-task.txt"));
         return new ReportTask().withProperties(path);
     }
 
@@ -43,14 +43,14 @@ public class ReportTask {
         return get("ceTaskId");
     }
 
-    private String get(String key) {
+    private String get(final String key) {
         return dataHolder.getOrDefault(key, "");
     }
 
     @SneakyThrows
-    private ReportTask withProperties(String filePath) {
-        @Cleanup FileInputStream inStream = new FileInputStream(filePath);
-        Properties properties = new Properties();
+    private ReportTask withProperties(final String filePath) {
+        final @Cleanup FileInputStream inStream = new FileInputStream(filePath);
+        final Properties properties = new Properties();
         properties.load(inStream);
         dataHolder.putAll(properties.entrySet().stream().collect(
                 Collectors.toMap(e -> e.getKey().toString(),

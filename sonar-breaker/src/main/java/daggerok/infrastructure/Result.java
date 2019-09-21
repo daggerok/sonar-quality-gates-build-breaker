@@ -24,7 +24,7 @@ public enum Result {
     @Getter
     private final int exitCode;
 
-    public Result withMessage(Object... messages) {
+    public Result withMessage(final Object... messages) {
         System.out.println(message);
         System.out.println(Arrays.stream(messages)
                                  .filter(Objects::nonNull)
