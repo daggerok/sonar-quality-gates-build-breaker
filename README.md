@@ -1,4 +1,4 @@
-# SonarQube Build Breaker [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker)
+# SonarQube ❤ Build Breaker [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker)
 SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed
 
 ## Table of content
