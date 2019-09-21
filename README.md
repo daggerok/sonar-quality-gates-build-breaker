@@ -6,6 +6,7 @@ SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline b
 * [Quick start](#Quick-start)
   * [Get SonarQube Build Breaker](#Get-SonarQube-Build-Breaker)
   * [Do analysis](#Do-analysis)
+* [Documentation](#Documentation)
 * [Links](#links)
 
 ## Quick start
@@ -21,6 +22,10 @@ TODO...
 ### Do analysis
 
 TODO...
+
+## Documentation
+
+See: https://daggerok.github.io/sonar-quality-gates-build-breaker/
 
 ## Links
 
