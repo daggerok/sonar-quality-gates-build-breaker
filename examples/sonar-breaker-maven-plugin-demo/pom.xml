@@ -8,8 +8,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <description>
+        TODO: Implement Demo project uses
+        sonar-breaker-maven-plugin to break
+        build if sonar issues occurs
+    </description>
     <modelVersion>4.0.0</modelVersion>
-    <description>Demo project for Spring Boot</description>
     <artifactId>sonar-breaker-maven-plugin-demo</artifactId>
     <packaging>jar</packaging>
 

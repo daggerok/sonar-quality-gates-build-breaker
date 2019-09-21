@@ -268,12 +268,11 @@
                         <version>${maven-release-plugin.version}</version>
                         <configuration>
                             <arguments>-DskipTests -Dmaven.deploy.skip=true -Ppublish-locally</arguments>
-                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>-->
+                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <generateReleasePoms>false</generateReleasePoms>
-                            <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <tagNameFormat>@{project.version}</tagNameFormat>
                             <releaseProfiles>local-maven-repo</releaseProfiles>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
+                            <generateReleasePoms>false</generateReleasePoms>
                             <preparationGoals>clean</preparationGoals>
                             <completionGoals>clean</completionGoals>
                         </configuration>
