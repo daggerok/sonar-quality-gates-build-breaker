@@ -61,7 +61,7 @@ jobs:
     - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 40s
+    - sleep 30s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     - java -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt
     after_script:
@@ -78,7 +78,7 @@ jobs:
     - ./mvnw -U >/dev/null
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 40s
+    - sleep 30s
     - ./mvnw -P sonar ; java -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected...'
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
@@ -101,7 +101,7 @@ jobs:
       keep-history: true
       local-dir: ./docs/.vuepress/dist
       target_branch: gh-pages
-      ## see if condition
+      ## if: branch ~= /master/ AND (type NOT IN (pull_request))
       #on:
       #  branch: master
       #  condition: "$TRAVIS_PULL_REQUEST = false"
