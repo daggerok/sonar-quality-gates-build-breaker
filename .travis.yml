@@ -75,7 +75,7 @@ jobs:
     - sleep 45s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
-    - java -Dsonar.breaker.retry=1 -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt || echo 'expected non zero erroe code...'
+    - java -Dsonar.breaker.retry=1 -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt || echo 'expected non zero error code...'
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
@@ -91,7 +91,7 @@ jobs:
     - echo wait a half of minute while sonarQube is selfconfiguring...
     - sleep 30s
     # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
-    - ./mvnw -P sonar ; java -Dsonar.breaker.delay=0 -Dsonar.breaker.retry=5 -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected non zero erroe code...'
+    - ./mvnw -P sonar ; java -Dsonar.breaker.delay=0 -Dsonar.breaker.retry=5 -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected non zero error code...'
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
