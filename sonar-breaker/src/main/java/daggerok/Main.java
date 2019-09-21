@@ -63,7 +63,7 @@ public class Main {
 
             TaskResponse body = response.body();
             String status = requireNonNull(body, "oops 3.5").getTask().getStatus();
-            System.out.printf("%d attempts left for analysis: %s%n", retry, status.toLowerCase().replaceAll("_", " "));
+            System.out.printf("%d attempts left for analysis (%s)%n", retry, status.toLowerCase().replaceAll("_", " "));
 
             if (!asList("SUCCESS", "FAILED").contains(status)) {
                 TimeUnit.SECONDS.sleep(delay);
