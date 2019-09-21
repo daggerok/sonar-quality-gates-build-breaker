@@ -2,12 +2,14 @@ package daggerok.infrastructure;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Log4j2//(topic = "Breaker")
 public enum Result {
 
     BUILD_SUCCESS("BUILD SUCCESS!", 0),
@@ -24,12 +26,12 @@ public enum Result {
     @Getter
     private final int exitCode;
 
-    public Result withMessage(final Object... messages) {
-        System.out.println(message);
-        System.out.println(Arrays.stream(messages)
-                                 .filter(Objects::nonNull)
-                                 .map(Objects::toString)
-                                 .collect(Collectors.joining("\n")));
+    public Result withMessage(final String... messages) {
+        log.info(() -> message);
+        log.info(() -> Arrays.stream(messages)
+                             .filter(Objects::nonNull)
+                             .map(Objects::toString)
+                             .collect(Collectors.joining("\n")));
         return this;
     }
 
