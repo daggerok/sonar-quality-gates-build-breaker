@@ -11,10 +11,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>docker</module>
-        <module>sonar-breaker</module>
         <module>sonar-breaker-maven-plugin</module>
+        <module>sonar-breaker</module>
         <module>example</module>
+        <module>docker</module>
         <module>docs</module>
     </modules>
 
