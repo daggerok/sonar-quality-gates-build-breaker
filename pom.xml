@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.daggerok.sonar</groupId>
-    <description>SonarQube ❤ Build Breaker - fail pipeline builds according to its Quality Gates️ analysis</description>
+    <description>SonarQube 💥 Build Breaker - fail pipeline builds according to its Quality Gates️ analysis</description>
     <artifactId>sonar-quality-gates-build-breaker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
