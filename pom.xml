@@ -5,14 +5,16 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.daggerok.sonar</groupId>
+    <description>Fail pipeline builds according to SonarQube ❤ Quality Gates️</description>
     <artifactId>sonar-quality-gates-build-breaker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>docker</module>
         <module>sonar-breaker</module>
         <module>example</module>
-        <module>docker</module>
+        <module>docs</module>
     </modules>
 
     <properties>
@@ -30,6 +32,10 @@
         <sonar.password>admin</sonar.password>-->
         <sonar.host.url>http://127.0.0.1:80</sonar.host.url>
         <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
+
+        <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.npmVersion>6.11.3</frontend-maven-plugin.npmVersion>
+        <frontend-maven-plugin.nodeVersion>v12.10.0</frontend-maven-plugin.nodeVersion>
 
         <lombok.version>1.18.10</lombok.version>
         <retrofit.version>2.6.1</retrofit.version>
@@ -116,6 +122,38 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>install node and npm</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>npm install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>install</arguments>
+                            </configuration>
+                            <phase>process-resources</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skip>true</skip>
+                        <npmVersion>${frontend-maven-plugin.npmVersion}</npmVersion>
+                        <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                        <workingDirectory>${maven.multiModuleProjectDirectory}/docs</workingDirectory>
+                        <installDirectory>${maven.multiModuleProjectDirectory}/target</installDirectory>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>com.dkanejs.maven.plugins</groupId>
                     <artifactId>docker-compose-maven-plugin</artifactId>
                     <version>${docker-compose-maven-plugin.version}</version>
@@ -134,6 +172,7 @@
                         </execution>
                     </executions>
                     <configuration>
+                        <skip>true</skip>
                         <composeFiles>
                             <composeFile>${maven.multiModuleProjectDirectory}/docker/docker-compose.yaml</composeFile>
                         </composeFiles>

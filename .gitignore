@@ -8,6 +8,8 @@ out/
 *.ipr
 *.iws
 *.log*
+**/node_modules/**
+**/.vuepress/dist/**
 
 ### STS ###
 .apt_generated

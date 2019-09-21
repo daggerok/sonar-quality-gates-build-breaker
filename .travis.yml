@@ -20,9 +20,15 @@ addons:
     - docker-ce
 install: true
 before_install:
-- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+#- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- |
+  if [ ! -f $HOME/.local/daggerok/bash-functions/master/main.bash ] ; then
+    mkdir -p $HOME/.local/daggerok/bash-functions/master ;
+    curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > $HOME/.local/daggerok/bash-functions/master/main.bash ;
+  fi
+  source $HOME/.local/daggerok/bash-functions/master/main.bash ;
 - stop_any 80 8080 9000
-- docker-compose -v
+#- docker-compose -v
 - |
   if [[ ! -f $HOME/.local/bin/docker-compose ]] ; then
     rm -rf $HOME/.local/bin ;
@@ -32,7 +38,17 @@ before_install:
     export PATH=$HOME/.local/bin:$PATH
     docker-compose -v
   fi
-before_script:
+#before_cache:
+#- find ~/.gradle -name '*.lock' -type f             -print0 | xargs -0 sudo rm -rfv '{}'
+#- find ~/.gradle -name 'plugin-resolution' -type d  -print0 | xargs -0 sudo rm -rfv '{}'
+cache:
+  pip: true
+  packages: true
+  directories:
+  - ~/.local/daggerok
+  - ~/.local/bin
+  - ~/.docker
+  - ~/.m2
 after_script: ./mvnw -pl :docker docker-compose:down
 jobs:
   include:
@@ -65,39 +81,23 @@ jobs:
     jdk: openjdk11
     name: display-property-updates openjdk11
     script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
-#  - stage: deploy
-#    jdk: openjdk8
-#    rvm: 2.6.4
-#    name: GitHub release and GitHub pages deployment
-#    script: skip
-#    if: branch = "master" AND type NOT IN (pull_request)
-#    before_deploy:
-#    - if [ "$TRAVIS_PULL_REQUEST" != "false" ] || [ ".$TRAVIS_BRANCH" != ".master" ] ; then exit 0 ; fi
-#    - set -e
-#    - ./gradlew documentation
-#    #- ./mvnw -Pdocs
-#    - mkdir -p ./target/generated-docs
-#    - cp -Rf ./target/generated-docs/index.html ./target/generated-docs/404.html
-#    deploy:
-#      provider: pages
-#      skip-cleanup: true
-#      # travis encrypt GITHUB_TOKEN=<your github repo token> --add
-#      github-token: "$GITHUB_TOKEN"
-#      keep-history: true
-#      on:
-#        branch: master
-#      local-dir: target/generated-docs
-#      target_branch: gh-pages
-#stages:
-#- test
-#- deploy
-#before_cache:
-#- find ~/.gradle -name '*.lock' -type f             -print0 | xargs -0 sudo rm -rfv '{}'
-#- find ~/.gradle -name 'plugin-resolution' -type d  -print0 | xargs -0 sudo rm -rfv '{}'
-cache:
-  pip: true
-  packages: true
-  directories:
-  - ~/.local/bin
-  - ~/.docker
-  - ~/.m2
+  - stage: deploy
+    jdk: openjdk8
+    rvm: 2.6.4
+    name: Deploy VuePress documentation on GitHub Pages
+    script: skip
+    before_deploy: ./mvnw -pl :docs -P gh-pages
+    deploy:
+      provider: pages
+      skip-cleanup: true
+      # travis encrypt GITHUB_TOKEN=<your github repo token> --add
+      github-token: "$GITHUB_TOKEN"
+      keep-history: true
+      on:
+        branch: master
+        condition: "$TRAVIS_PULL_REQUEST = false"
+      local-dir: ./docs/target/generated-docs
+      target_branch: gh-pages
+stages:
+- test
+- deploy
