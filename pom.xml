@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <mainClass />
+        <mainClass/>
 
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -200,15 +200,21 @@
                     <executions>
                         <execution>
                             <id>up</id>
-                            <goals><goal>up</goal></goals>
+                            <goals>
+                                <goal>up</goal>
+                            </goals>
                         </execution>
                         <execution>
                             <id>down</id>
-                            <goals><goal>down</goal></goals>
+                            <goals>
+                                <goal>down</goal>
+                            </goals>
                         </execution>
                         <execution>
                             <id>help</id>
-                            <goals><goal>help</goal></goals>
+                            <goals>
+                                <goal>help</goal>
+                            </goals>
                         </execution>
                     </executions>
                     <configuration>

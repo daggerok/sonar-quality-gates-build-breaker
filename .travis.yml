@@ -60,7 +60,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 60s
+    - sleep 30s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :sonar-breaker-maven-plugin-demo sonar-breaker:analyze
     after_script:
@@ -72,7 +72,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 60s
+    - sleep 30s
     - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
     - java -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt
     after_script:

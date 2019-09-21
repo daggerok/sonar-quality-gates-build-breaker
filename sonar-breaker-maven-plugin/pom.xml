@@ -10,7 +10,8 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <description>TODO: Implement SonarQube 💥 Build Breaker maven plugin should work together with sonar-maven-plugin</description>
+    <description>TODO: Implement SonarQube 💥 Build Breaker maven plugin should work together with sonar-maven-plugin
+    </description>
     <artifactId>sonar-breaker-maven-plugin</artifactId>
     <!-- tag::packaging -->
     <packaging>maven-plugin</packaging>
@@ -40,7 +41,7 @@
             <artifactId>vavr</artifactId>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -51,9 +52,11 @@
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
                 <executions>
-                     <execution>
+                    <execution>
                         <id>mojo-descriptor</id>
-                        <goals><goal>descriptor</goal></goals>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

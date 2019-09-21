@@ -14,8 +14,6 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.joining;
-
 @Log4j2
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReportTask {
