@@ -61,7 +61,7 @@
     <licenses>
         <license>
             <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://github.com/daggerok/sonar-quality-gates-build-breaker/blob/master/LICENSE</url>
         </license>
     </licenses>
 
