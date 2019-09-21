@@ -1,4 +1,4 @@
-# Sonar Breaker [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker)
+# SonarQube ❤ Build Breaker [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker)
 Main commandline tool
 
 ## Table of content
