@@ -1,7 +1,7 @@
-package daggerok.sonar.rest.api.qualitygates;
+package com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import daggerok.sonar.rest.api.qualitygates.projectstatus.Condition;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.projectstatus.Condition;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

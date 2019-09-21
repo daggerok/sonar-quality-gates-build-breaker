@@ -1,11 +1,12 @@
-package daggerok;
+package com.github.daggerok.sonarbreaker;
 
-import daggerok.infrastructure.Config;
-import daggerok.sonar.fs.ReportTask;
-import daggerok.sonar.rest.SonarClient;
-import daggerok.sonar.rest.api.ce.TaskResponse;
-import daggerok.sonar.rest.api.qualitygates.ProjectStatus;
-import daggerok.sonar.rest.api.qualitygates.ProjectStatusResponse;
+import com.github.daggerok.sonarbreaker.infrastructure.Config;
+import com.github.daggerok.sonarbreaker.infrastructure.Result;
+import com.github.daggerok.sonarbreaker.sonar.fs.ReportTask;
+import com.github.daggerok.sonarbreaker.sonar.rest.SonarClient;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.ce.TaskResponse;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.ProjectStatus;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.ProjectStatusResponse;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import lombok.val;
@@ -16,7 +17,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import static daggerok.infrastructure.Result.*;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
@@ -36,7 +36,7 @@ public class Main {
         if (args.length != 1) {
             final String actual = String.join(", ", args);
             final String error = format("arguments amount: %d (%s)", args.length, actual);
-            USAGE.withMessage(error).fail();
+            Result.USAGE.withMessage(error).fail();
             return;
         }
 
@@ -62,7 +62,7 @@ public class Main {
 
             if (!response.isSuccessful()) {
                 String error = new String(requireNonNull(response.errorBody(), "response failed.").bytes());
-                QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
+                Result.QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
                 return;
             }
 
@@ -75,7 +75,7 @@ public class Main {
                 if (retry > 0) continue;
 
                 final String error = format("stop waiting after %s tries", maxRetries);
-                TIMEOUT_EXCEEDED.withMessage(error).fail();
+                Result.TIMEOUT_EXCEEDED.withMessage(error).fail();
                 return;
             }
 
@@ -87,31 +87,31 @@ public class Main {
 
         if (!response.isSuccessful()) {
             final String error = format("%n%s", requireNonNull(response.errorBody(), "response failed.").string());
-            QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
+            Result.QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
             return;
         }
 
         ProjectStatusResponse body = response.body();
         final val maybeBody = Optional.ofNullable(body);
         if (!maybeBody.isPresent()) {
-            QUALITY_GATES_EMPTY_RESPONSE.withMessage().fail();
+            Result.QUALITY_GATES_EMPTY_RESPONSE.withMessage().fail();
             return;
         }
 
         final val maybeProjectStatus = maybeBody.map(ProjectStatusResponse::getProjectStatus);
         final val maybeStatus = maybeProjectStatus.map(ProjectStatus::getStatus);
         if (!maybeStatus.isPresent()) {
-            QUALITY_GATES_STATUS_FAILED.withMessage().fail();
+            Result.QUALITY_GATES_STATUS_FAILED.withMessage().fail();
             return;
         }
 
         final String status = maybeStatus.get();
         if (!"OK".equalsIgnoreCase(status)) {
             final ProjectStatus ps = maybeProjectStatus.get();
-            QUALITY_GATES_FAILED.withMessage(ps.failedConditions()).fail();
+            Result.QUALITY_GATES_FAILED.withMessage(ps.failedConditions()).fail();
             return;
         }
 
-        BUILD_SUCCESS.withMessage().done();
+        Result.BUILD_SUCCESS.withMessage().done();
     }
 }

@@ -1,4 +1,4 @@
-package daggerok.infrastructure;
+package com.github.daggerok.sonarbreaker.infrastructure;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

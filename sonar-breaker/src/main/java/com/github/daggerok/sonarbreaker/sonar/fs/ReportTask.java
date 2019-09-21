@@ -1,6 +1,6 @@
-package daggerok.sonar.fs;
+package com.github.daggerok.sonarbreaker.sonar.fs;
 
-import daggerok.infrastructure.Config;
+import com.github.daggerok.sonarbreaker.infrastructure.Config;
 import lombok.AccessLevel;
 import lombok.Cleanup;
 import lombok.NoArgsConstructor;
@@ -29,12 +29,8 @@ public class ReportTask {
     }
 
     public void printBuildInfo() {
-        log.info("{}\n{}",
-                          "Start SonarQube build breaker analysis...",
-                          dataHolder.entrySet()
-                                    .stream()
-                                    .map(entry -> String.format("%s=%s%n", entry.getKey(), entry.getValue()))
-                                    .collect(joining()));
+        log.info("Start SonarQube build breaker analysis...");
+        dataHolder.forEach((key, value) -> log.info("{}={}", key, value));
     }
 
     public String getServerUrl() {

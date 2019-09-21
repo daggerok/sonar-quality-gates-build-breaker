@@ -1,4 +1,4 @@
-package daggerok.sonar.rest.api.ce;
+package com.github.daggerok.sonarbreaker.sonar.rest.api.ce;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

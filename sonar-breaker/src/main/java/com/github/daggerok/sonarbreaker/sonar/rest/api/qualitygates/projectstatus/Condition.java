@@ -1,4 +1,4 @@
-package daggerok.sonar.rest.api.qualitygates.projectstatus;
+package com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.projectstatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

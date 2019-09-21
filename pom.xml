@@ -13,7 +13,7 @@
     <modules>
         <module>docker</module>
         <module>sonar-breaker</module>
-        <module>sonar-breaker-maven-plugin</module>
+<!--        <module>sonar-breaker-maven-plugin</module>-->
         <module>examples</module>
         <module>docs</module>
     </modules>
@@ -37,6 +37,9 @@
         <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
         <frontend-maven-plugin.npmVersion>6.11.3</frontend-maven-plugin.npmVersion>
         <frontend-maven-plugin.nodeVersion>v12.10.0</frontend-maven-plugin.nodeVersion>
+
+        <maven.version>[3.3.9,)</maven.version>
+        <!-- <maven.version>3.6.2</maven.version> -->
 
         <log4j.version>2.12.1</log4j.version>
         <lombok.version>1.18.10</lombok.version>
@@ -99,6 +102,12 @@
                 <version>${log4j.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven.version}</version>
+                <type>jar</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -323,6 +332,13 @@
         <profile>
             <id>maven-release-jcenter</id>
             <build>
+                <!--
+                ./mvnw -B release:clean release:prepare release:perform \
+                       -P ,publish-locally \
+                       -Dmaven.deploy.skip=true \
+                       -s .m2/settings.xml \
+                       -Dresume=false
+                -->
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -350,7 +366,7 @@
                 ./mvnw clean package
                 ./mvnw -P upload-github-release -pl :sonar-quality-gates-build-breaker
                 -->
-                <defaultGoal>de.jutzig:github-release-plugin:1.1.1:release</defaultGoal>
+                <defaultGoal>de.jutzig:github-release-plugin:${github-release-plugin.version}:release</defaultGoal>
                 <plugins>
                     <plugin>
                         <groupId>de.jutzig</groupId>

@@ -1,7 +1,7 @@
-package daggerok.sonar.rest;
+package com.github.daggerok.sonarbreaker.sonar.rest;
 
-import daggerok.sonar.rest.api.ce.TaskResponse;
-import daggerok.sonar.rest.api.qualitygates.ProjectStatusResponse;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.ce.TaskResponse;
+import com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.ProjectStatusResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
