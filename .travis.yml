@@ -54,8 +54,20 @@ cache:
 jobs:
   include:
   - stage: test
+    jdk: openjdk11
+    name: test sonar-breaker-maven-plugin openjdk11
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - wait_healthy_docker_containers 1
+    - echo wait a half of minute while sonarQube is selfconfiguring...
+    - sleep 60s
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :sonar-breaker-maven-plugin-demo sonar-breaker:analyze
+    after_script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
     jdk: openjdk8
-    name: test openjdk8
+    name: test sonar-breaker openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
     - wait_healthy_docker_containers 1

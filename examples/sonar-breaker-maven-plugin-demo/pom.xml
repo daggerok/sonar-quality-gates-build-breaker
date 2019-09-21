@@ -48,6 +48,18 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.daggerok.sonar</groupId>
+                <artifactId>sonar-breaker-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <!--<executions>
+                    <execution>
+                        <id>sonar-breaker</id>
+                        <goals><goal>analyze</goal></goals>
+                    </execution>
+                </executions>-->
+            </plugin>
         </plugins>
     </build>
 
