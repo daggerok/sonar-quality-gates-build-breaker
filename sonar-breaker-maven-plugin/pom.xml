@@ -10,7 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <description>TODO: Implement maven plugin to be used together with sonar-maven-plugin</description>
+    <description>TODO: Implement SonarQube ❤ Build Breaker maven plugin should work together with sonar-maven-plugin</description>
     <artifactId>sonar-breaker-maven-plugin</artifactId>
     <packaging>pom</packaging>
 
