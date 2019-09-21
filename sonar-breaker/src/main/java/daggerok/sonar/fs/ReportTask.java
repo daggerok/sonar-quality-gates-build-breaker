@@ -22,14 +22,13 @@ public class ReportTask {
 
     public static ReportTask of(String filePath) {
         String path = Optional.ofNullable(filePath)
-                              .orElse(Config.get("sonar.report.task",
-                                                 "target/sonar/report-task.txt"));
+                              .orElse(Config.get("sonar.report.task", "target/sonar/report-task.txt"));
         return new ReportTask().withProperties(path);
     }
 
     public void printBuildInfo() {
         System.out.printf("%s%n%s",
-                          "Start SonarQube build breaker analysis of next report task:",
+                          "Start SonarQube build breaker analysis...",
                           dataHolder.entrySet()
                                     .stream()
                                     .map(entry -> String.format("%s=%s%n", entry.getKey(), entry.getValue()))

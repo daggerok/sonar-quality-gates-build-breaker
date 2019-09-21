@@ -90,8 +90,7 @@ jobs:
     jdk: openjdk8
     rvm: 2.6.4
     name: Deploy VuePress documentation on GitHub Pages
-    if: branch ~= master AND \
-        type NOT IN (pull_request)
+    if: branch ~= /master/ AND (type NOT IN (pull_request))
     script: skip
     before_deploy: ./mvnw -pl :docs -P gh-pages
     deploy:
@@ -100,11 +99,12 @@ jobs:
       # travis encrypt GITHUB_TOKEN=<your github repo token> --add
       github-token: "$GITHUB_TOKEN"
       keep-history: true
-      on:
-        branch: master
-        condition: "$TRAVIS_PULL_REQUEST = false"
       local-dir: ./docs/.vuepress/dist
       target_branch: gh-pages
+      ## see if condition
+      #on:
+      #  branch: master
+      #  condition: "$TRAVIS_PULL_REQUEST = false"
 stages:
 - test
 - deploy
