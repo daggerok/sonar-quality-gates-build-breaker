@@ -375,21 +375,9 @@
                                     </includes>
                                 </fileSet>
                                 <fileSet>
-                                    <directory>${maven.multiModuleProjectDirectory}/target</directory>
+                                    <directory>${maven.multiModuleProjectDirectory}</directory>
                                     <includes>
-                                        <include>*.jar</include>
-                                    </includes>
-                                </fileSet>
-                                <fileSet>
-                                    <directory>${maven.multiModuleProjectDirectory}/example/target</directory>
-                                    <includes>
-                                        <include>*.jar</include>
-                                    </includes>
-                                </fileSet>
-                                <fileSet>
-                                    <directory>${maven.multiModuleProjectDirectory}/sonar-breaker/target</directory>
-                                    <includes>
-                                        <include>*.jar</include>
+                                        <include>**/target/*.jar</include>
                                     </includes>
                                 </fileSet>
                             </fileSets>
