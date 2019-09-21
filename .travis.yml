@@ -90,6 +90,8 @@ jobs:
     jdk: openjdk8
     rvm: 2.6.4
     name: Deploy VuePress documentation on GitHub Pages
+    if: branch ~= master AND \
+        type NOT IN (pull_request)
     script: skip
     before_deploy: ./mvnw -pl :docs -P gh-pages
     deploy:
