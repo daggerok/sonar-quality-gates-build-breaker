@@ -3,7 +3,7 @@ SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline b
 
 ## Table of content
 
-* [Quick start](#Quick start)
+* [Quick start](#Quick-start)
   * [Get SonarQube Build Breaker](#Get-SonarQube-Build-Breaker)
   * [Do analysis](#Do-analysis)
 * [Links](#links)
