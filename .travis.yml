@@ -146,7 +146,8 @@ jobs:
     jdk: openjdk8
     rvm: 2.6.4
     name: Deploy VuePress documentation on GitHub Pages openjdk8
-    if: branch ~= /master/ AND (type NOT IN (pull_request))
+    #if: branch ~= /master/ AND (type NOT IN (pull_request))
+    if: tag IS present
     script: skip
     before_deploy:
     - echo '<?xml version="1.0" encoding="UTF-8" ?>                                                                             ' >> .mvn/settings.xml
