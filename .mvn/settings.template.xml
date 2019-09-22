@@ -9,9 +9,9 @@
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
-                    <id>bintray-daggerok-daggerok</id>
+                    <id>bintray-daggerok-maven</id>
                     <name>bintray</name>
-                    <url>https://dl.bintray.com/daggerok/daggerok</url>
+                    <url>https://dl.bintray.com/daggerok/maven</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -19,9 +19,9 @@
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
-                    <id>bintray-daggerok-daggerok</id>
+                    <id>bintray-daggerok-maven</id>
                     <name>bintray-plugins</name>
-                    <url>https://dl.bintray.com/daggerok/daggerok</url>
+                    <url>https://dl.bintray.com/daggerok/maven</url>
                 </pluginRepository>
             </pluginRepositories>
             <id>bintray</id>
@@ -37,7 +37,7 @@
             <password>[YOUR_API_KEY open: https://bintray.com/profile/edit and click: API KEY]</password>
         </server>-->
         <server>
-            <id>bintray-daggerok-daggerok</id>
+            <id>bintray-daggerok-maven</id>
             <username>daggerok</username>
             <password>**********</password>
         </server>

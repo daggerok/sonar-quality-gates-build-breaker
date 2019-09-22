@@ -165,24 +165,24 @@ jobs:
     - echo '      <repositories>                                                                                                ' >> .mvn/settings.xml
     - echo '        <repository>                                                                                                ' >> .mvn/settings.xml
     - echo '          <snapshots><enabled>false</enabled></snapshots>                                                           ' >> .mvn/settings.xml
-    - echo '          <id>bintray-daggerok-daggerok</id>                                                                        ' >> .mvn/settings.xml
+    - echo '          <id>bintray-daggerok-maven</id>                                                                        ' >> .mvn/settings.xml
     - echo '          <name>bintray</name>                                                                                      ' >> .mvn/settings.xml
-    - echo '          <url>https://dl.bintray.com/daggerok/daggerok</url>                                                       ' >> .mvn/settings.xml
+    - echo '          <url>https://dl.bintray.com/daggerok/maven</url>                                                       ' >> .mvn/settings.xml
     - echo '        </repository>                                                                                               ' >> .mvn/settings.xml
     - echo '      </repositories>                                                                                               ' >> .mvn/settings.xml
     - echo '      <pluginRepositories>                                                                                          ' >> .mvn/settings.xml
     - echo '        <pluginRepository>                                                                                          ' >> .mvn/settings.xml
     - echo '          <snapshots><enabled>false</enabled></snapshots>                                                           ' >> .mvn/settings.xml
-    - echo '          <id>bintray-daggerok-daggerok</id>                                                                        ' >> .mvn/settings.xml
+    - echo '          <id>bintray-daggerok-maven</id>                                                                        ' >> .mvn/settings.xml
     - echo '          <name>bintray-plugins</name>                                                                              ' >> .mvn/settings.xml
-    - echo '          <url>https://dl.bintray.com/daggerok/daggerok</url>                                                       ' >> .mvn/settings.xml
+    - echo '          <url>https://dl.bintray.com/daggerok/maven</url>                                                       ' >> .mvn/settings.xml
     - echo '        </pluginRepository>                                                                                         ' >> .mvn/settings.xml
     - echo '      </pluginRepositories>                                                                                         ' >> .mvn/settings.xml
     - echo '      <id>bintray</id>                                                                                              ' >> .mvn/settings.xml
     - echo '</profile></profiles>                                                                                               ' >> .mvn/settings.xml
     - echo '<activeProfiles><activeProfile>bintray</activeProfile></activeProfiles>                                             ' >> .mvn/settings.xml
     - echo '<servers><server>                                                                                                   ' >> .mvn/settings.xml
-    - echo '  <id>bintray-daggerok-daggerok</id>                                                                                ' >> .mvn/settings.xml
+    - echo '  <id>bintray-daggerok-maven</id>                                                                                ' >> .mvn/settings.xml
     - echo '  <username>daggerok</username>                                                                                     ' >> .mvn/settings.xml
     - echo "  <password>${BINTRAY_API_KEY}</password>                                                                           " >> .mvn/settings.xml
     - echo '</server><server>                                                                                                   ' >> .mvn/settings.xml

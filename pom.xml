@@ -386,9 +386,8 @@
                         <configuration>
                             <!--<arguments>-DskipTests</arguments>-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <generateReleasePoms>false</generateReleasePoms>
-                            <autoVersionSubmodules>true</autoVersionSubmodules>
                             <tagNameFormat>@{project.version}</tagNameFormat>
+                            <generateReleasePoms>false</generateReleasePoms>
                             <preparationGoals>clean</preparationGoals>
                             <completionGoals>clean</completionGoals>
                         </configuration>
@@ -445,9 +444,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-daggerok-daggerok</id>
-            <name>daggerok-daggerok</name>
-            <url>https://api.bintray.com/maven/daggerok/daggerok/sonar-quality-gates-build-breaker/;publish=1</url>
+            <id>bintray-daggerok-maven</id>
+            <name>bintray-daggerok-maven</name>
+            <url>https://api.bintray.com/maven/daggerok/maven/sonar-quality-gates-build-breaker/;publish=1</url>
         </repository>
     </distributionManagement>
 

@@ -116,16 +116,52 @@ repository_
 * Enter Name: `sonar-quality-gates-build-breaker`
 * Enter description...
 * Select `Licences`, `Tags`, `Maturity`
-* Enter Website: `https://github.com/daggerok/sonar-quality-gates-build-breaker`
+* Enter Website: `https://daggerok.github.io/sonar-quality-gates-build-breaker/`
 * Enter Issues tracker: `https://github.com/daggerok/sonar-quality-gates-build-breaker`
 * Enter Version control: `https://github.com/daggerok/sonar-quality-gates-build-breaker.git`
 * Check `Make download numbers in stats public`
 * Click `Create Package`
 * Enter GitHub repo (user/repo): `daggerok/sonar-quality-gates-build-breaker`
 * Click `Update Package`
-* Enter GitHub release notes file: `https://github.com/daggerok/sonar-quality-gates-build-breaker/blob/master/CHANGELOG.md`
+* Enter GitHub release notes file: `CHANGELOG.md`
+* Click `Update Package`
+* Verify popup notification: `Package sonar-quality-gates-build-breaker was updated`
+
 _secondly update settings.xml file accordingly: `//servers/server/bintray-daggerok-daggerok` password => bintray API key_
 
 ```bash
 vi .mvn/settings.xml
+```
+
+_add `distributionManagement` section in your pom.xml_
+
+```xml
+<distributionManagement>
+    <repository>
+        <id>bintray-daggerok-maven</id>
+        <name>bintray-daggerok-maven</name>
+        <url>https://api.bintray.com/maven/daggerok/maven/sonar-quality-gates-build-breaker/;publish=1</url>
+    </repository>
+</distributionManagement>
+```
+
+_finally, once repository was created and everything else needed has been done, publish artifacts to your personal
+bintray jcenter maven repository_
+
+```bash
+./mvnw -Pbintray-release -B -s .mvn/settings.xml \
+    release:clean release:prepare release:perform
+```
+
+_or more verbosely_
+
+```bash
+./mvnw release:prepare release:perform -B -s .mvn/settings.xml \
+  -DskipTests -Darguments="-DskipTests" \
+  -DtagNameFormat="@{project.version}" \
+  -DautoVersionSubmodules=true \
+  -DgenerateReleasePoms=false \
+  -DpreparationGoals="clean" \
+  -completionGoals="clean" \
+  -Dresume=false
 ```
