@@ -320,11 +320,11 @@
                         <version>${maven-release-plugin.version}</version>
                         <configuration>
                             <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>
-                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
-                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
+                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
+                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <!--<releaseProfiles>local-publish</releaseProfiles>
                             <preparationGoals>clean</preparationGoals>
                             <completionGoals>clean</completionGoals>-->
