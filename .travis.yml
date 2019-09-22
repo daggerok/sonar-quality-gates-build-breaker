@@ -195,9 +195,9 @@ jobs:
     #
     - ./mvnw -pl :docs -P gh-pages
     deploy:
-    #- provider: script
-    #  skip_cleanup: true
-    #  script: bash -c './bin/local-release.sh'
+    - provider: script
+      skip_cleanup: true
+      script: cd $TRAVIS_BUILD_DIR && ./bin/github-publish.sh
     - provider: pages
       skip-cleanup: true
       keep-history: true
