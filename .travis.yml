@@ -54,18 +54,6 @@ cache:
 jobs:
   include:
   - stage: test
-    jdk: openjdk11
-    name: test sonar-breaker-maven-plugin openjdk11
-    script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
-    - wait_healthy_docker_containers 1
-    - echo wait a half of minute while sonarQube is selfconfiguring...
-    - sleep 30s
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :sonar-breaker-maven-plugin-demo sonar-breaker:analyze
-    after_script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
-  - stage: test
     jdk: openjdk8
     name: test sonar-breaker openjdk8
     script:
@@ -78,6 +66,18 @@ jobs:
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
+    jdk: openjdk11
+    name: test sonar-breaker-maven-plugin openjdk11
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - wait_healthy_docker_containers 1
+    - echo wait a half of minute while sonarQube is selfconfiguring...
+    - sleep 30s
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar -DskipTests
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :sonar-breaker-maven-plugin-demo sonar-breaker:analyze
+    after_script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
     jdk: openjdk8
     name: test sonar.breaker.retry openjdk8
     script:
@@ -85,15 +85,11 @@ jobs:
     - wait_healthy_docker_containers 1
     - echo wait a half of minute while sonarQube is selfconfiguring...
     - sleep 45s
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar -DskipTests
     # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
     - java -Dsonar.breaker.retry=1 -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt || echo 'expected non zero error code...'
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
-  - stage: test
-    jdk: openjdk8
-    name: display-property-updates openjdk8
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: test
     jdk: openjdk11
     name: test sonar.breaker.delay openjdk11
@@ -103,9 +99,13 @@ jobs:
     - echo wait a half of minute while sonarQube is selfconfiguring...
     - sleep 30s
     # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
-    - ./mvnw -P sonar ; java -Dsonar.breaker.delay=0 -Dsonar.breaker.retry=5 -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected non zero error code...'
+    - ./mvnw -P sonar -DskipTests ; java -Dsonar.breaker.delay=0 -Dsonar.breaker.retry=5 -jar ./sonar-breaker/target/*-all.jar ./target/sonar/report-task.txt || echo 'expected non zero error code...'
     after_script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
+    jdk: openjdk8
+    name: display-property-updates openjdk8
+    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: test
     jdk: openjdk11
     name: display-property-updates openjdk11
@@ -113,7 +113,7 @@ jobs:
   - stage: deploy
     jdk: openjdk8
     rvm: 2.6.4
-    name: Deploy VuePress documentation on GitHub Pages
+    name: Deploy VuePress documentation on GitHub Pages openjdk8
     if: branch ~= /master/ AND (type NOT IN (pull_request))
     script: skip
     before_deploy: ./mvnw -pl :docs -P gh-pages

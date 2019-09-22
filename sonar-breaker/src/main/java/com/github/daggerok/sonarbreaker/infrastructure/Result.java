@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Log4j2
 @RequiredArgsConstructor
-@Log4j2//(topic = "Breaker")
 public enum Result {
 
     BUILD_SUCCESS("BUILD SUCCESS!", 0),
@@ -28,10 +28,11 @@ public enum Result {
 
     public Result withMessage(final String... messages) {
         log.info(() -> message);
-        log.info(() -> Arrays.stream(messages)
-                             .filter(Objects::nonNull)
-                             .map(Objects::toString)
-                             .collect(Collectors.joining("\n")));
+        if (messages.length > 0)
+            log.info(() -> Arrays.stream(messages)
+                                 .filter(Objects::nonNull)
+                                 .map(Objects::toString)
+                                 .collect(Collectors.joining("\n")));
         return this;
     }
 
