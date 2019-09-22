@@ -8,9 +8,13 @@ Here are some notes, about how to publish or deploy locally or remotely to githu
 
 [[toc]]
 
+<!--
+
 ## Manual (by hands) job
 
-### Publish artifacts locally
+-->
+
+## Publish artifacts locally
 
 ::: tip NOTE
 See `./bin/local-publish.sh` script.
@@ -24,7 +28,7 @@ tree ./target/.m2
 
 Artifacts should be found under `./target/m2/repository` directory
 
-### Release github tag
+## Release github tag
 
 ::: tip NOTE
 See `./bin/local-release.sh` script.
@@ -50,7 +54,7 @@ _or more verbosely_
 
 Release should be found on github project repo release page
 
-### Publish artifacts to github
+## Publish artifacts to github
 
 ::: tip NOTE
 See `./bin/github-publish.sh` script.
@@ -84,12 +88,16 @@ bash ./bin/github-all.sh
 ```
 :::
 
+<!--
+
 ## Automatic (CI) job
 
 All job before was intended to be executed manually from developer laptop...
 Let's on each created tag trigger bintray jcenter release publication automatically!
 
-### Publish artifacts to bintray jcenter
+-->
+
+## Publish artifacts to bintray jcenter
 
 _Workflow_
 
@@ -148,9 +156,13 @@ _add `distributionManagement` section in your pom.xml_
 _finally, once repository was created and everything else needed has been done, publish artifacts to your personal
 bintray jcenter maven repository_
 
+<!--
+
 ```bash
 ./mvnw -Pbintray-publish -B -s .mvn/settings.xml
 ```
+
+-->
 
 _or more verbosely_
 
@@ -161,6 +173,6 @@ _or more verbosely_
   -DautoVersionSubmodules=true \
   -DgenerateReleasePoms=false \
   -DpreparationGoals="clean" \
-  -completionGoals="clean" \
+  -DcompletionGoals="clean" \
   -Dresume=false
 ```
