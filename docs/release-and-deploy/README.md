@@ -99,6 +99,10 @@ Let's on each created tag trigger bintray jcenter release publication automatica
 
 ## Publish artifacts to bintray jcenter
 
+::: tip NOTE
+See `./bin/bintray-all.sh` script.
+:::
+
 _Workflow_
 
 * on each tag trigger publish job
