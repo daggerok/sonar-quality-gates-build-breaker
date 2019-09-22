@@ -4,7 +4,7 @@
     <parent>
         <artifactId>sonar-quality-gates-build-breaker</artifactId>
         <groupId>com.github.daggerok.sonar</groupId>
-        <version>0.0.24-SNAPSHOT</version>
+        <version>0.0.23-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
