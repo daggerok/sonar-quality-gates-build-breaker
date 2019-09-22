@@ -321,9 +321,9 @@
                             <arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-publish</arguments>
                             <!--<arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <releaseProfiles>local-maven-repo</releaseProfiles>
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
+                            <releaseProfiles>local-publish</releaseProfiles>
                             <preparationGoals>clean</preparationGoals>
                             <completionGoals>clean</completionGoals>
                         </configuration>
