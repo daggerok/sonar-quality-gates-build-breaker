@@ -149,8 +149,7 @@ _finally, once repository was created and everything else needed has been done, 
 bintray jcenter maven repository_
 
 ```bash
-./mvnw -Pbintray-release -B -s .mvn/settings.xml \
-    release:clean release:prepare release:perform
+./mvnw -Pbintray-release -B -s .mvn/settings.xml
 ```
 
 _or more verbosely_

@@ -378,6 +378,7 @@
                        -s .m2/settings.xml \
                        -Dresume=false
                 -->
+                <defaultGoal>release:clean release:prepare release:perform</defaultGoal>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
