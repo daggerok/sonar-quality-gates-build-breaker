@@ -336,12 +336,13 @@
         </profile>
 
         <profile>
-            <id>publish-to-github</id>
+            <id>github-publish</id>
             <build>
                 <!--
-                ./mvnw clean
-                ./mvnw -P local-publish
-                ./mvnw -P publish-to-github -pl :sonar-quality-gates-build-breaker
+                at first time:
+                1) cp .mvn/settings.template.xml settings.xml and update it accordingly
+                2) on github project repo create maven branch to be used for publishing artifacts
+                ./mvnw -P local-publish ; ./mvnw -P github-publish -pl :sonar-quality-gates-build-breaker -s .mvn/settings.xml
                 -->
                 <defaultGoal>scm-publish:publish-scm</defaultGoal>
                 <plugins>

@@ -42,3 +42,6 @@ _or more verbosely_
 ```
 
 Release should be found on github project repo release page
+
+## publish artifacts to github
+
