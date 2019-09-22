@@ -9,4 +9,4 @@ cd "${ROOT_PROJECT_DIR}" && ./mvnw -DskipTests -B -s .mvn/settings.xml \
   -Plocal-release ${ARGS}
 #cd "${ROOT_PROJECT_DIR}" && ./mvnw release:rollback -s .mvn/settings.xml
 cd "${ROOT_PROJECT_DIR}" && git fetch --all -p -a --tags
-cd "${ROOT_PROJECT_DIR}" && ./mvnw -DskipTests install
+#cd "${ROOT_PROJECT_DIR}" && ./mvnw -DskipTests install
