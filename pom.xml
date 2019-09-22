@@ -323,6 +323,7 @@
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
+                            <resume>false</resume>
                             <!--<arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
                             <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <!--<releaseProfiles>local-publish</releaseProfiles>

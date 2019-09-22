@@ -27,11 +27,8 @@ In case of failure, see `./bin/local-rollback.sh` script.
 _shorter_
 
 ```bash
-./mvnw -DskipTests -Dmaven.deploy.skip=true -B -s .mvn/settings.xml \
-  -Darguments="-DskipTests -Dmaven.deploy.skip=true" \
-  -Dresume=false -DgenerateReleasePoms=false \
-  release:prepare release:perform \
-  -Plocal-release
+./mvnw -Plocal-release -B -s .mvn/settings.xml \
+    release:prepare release:perform
 ```
 
 _or more verbosely_
