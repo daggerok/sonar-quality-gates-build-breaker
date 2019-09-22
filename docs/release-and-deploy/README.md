@@ -78,6 +78,6 @@ repository
 shorter way (one liner command) do everything we have dome before:
 
 ```bash
-bash ./bin/local-release.sh ; bash ./bin/local-publish.sh ; bash ./bin/github-publish.sh
+bash ./bin/github-all.sh
 ```
 :::
