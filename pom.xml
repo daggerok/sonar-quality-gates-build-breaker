@@ -319,14 +319,14 @@
                         <artifactId>maven-release-plugin</artifactId>
                         <version>${maven-release-plugin.version}</version>
                         <configuration>
-                            <arguments>-Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
-                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
+                            <!--<arguments>-Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
+                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
-                            <releaseProfiles>local-publish</releaseProfiles>
+                            <!--<releaseProfiles>local-publish</releaseProfiles>
                             <preparationGoals>clean</preparationGoals>
-                            <completionGoals>clean</completionGoals>
+                            <completionGoals>clean</completionGoals>-->
                         </configuration>
                     </plugin>
                 </plugins>
