@@ -1,4 +1,9 @@
-# Release / Deploy
+---
+title: Release and Deploy
+lang: en-US
+---
+
+# Release and Deploy
 Here are some notes, about how to publish or deploy locally or remotely to github / bintray jcenter 
 
 [[toc]]
@@ -45,3 +50,19 @@ Release should be found on github project repo release page
 
 ## publish artifacts to github
 
+::: tip NOTE
+See `./bin/github-publish.sh` script.
+:::
+
+```bash
+
+```
+
+_To be able to depends on published artifacts, add next maven repository_
+
+```xml
+<repository>
+    <id>github-maven-repo</id>
+    <url>https://github.com/daggerok/sonar-quality-gates-build-breaker/tree/maven/</url>
+</repository>
+```

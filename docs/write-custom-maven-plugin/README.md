@@ -1,3 +1,8 @@
+---
+title: Write custom maven plugin
+lang: en-US
+---
+
 # Write custom maven plugin
 Here are some notes, about hot to write custom maven plugin
 
