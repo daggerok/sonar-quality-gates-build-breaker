@@ -55,6 +55,31 @@ jobs:
   include:
   - stage: test
     jdk: openjdk8
+    name: test sonar-breaker-maven-plugin system properties openjdk8
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - wait_healthy_docker_containers 1
+    - echo wait a half of minute while sonarQube is selfconfiguring...
+    - sleep 30s
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar -DskipTests
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :sonar-breaker-maven-plugin-demo sonar-breaker:analyze -Dsonar.breaker.retry=1 -Dsonar.breaker.delay=0 || echo 'expected non zero error code...'
+    after_script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
+    jdk: openjdk11
+    name: test env variables SONAR_BREAKER_RETRY openjdk11
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
+    - wait_healthy_docker_containers 1
+    - echo wait a half of minute while sonarQube is selfconfiguring...
+    - sleep 45s
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -P sonar -DskipTests
+    # https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
+    - SONAR_BREAKER_RETRY=1 java -jar $TRAVIS_BUILD_DIR/sonar-breaker/target/*-all.jar $TRAVIS_BUILD_DIR/target/sonar/report-task.txt || echo 'expected non zero error code...'
+    after_script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
+  - stage: test
+    jdk: openjdk8
     name: test sonar-breaker openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
