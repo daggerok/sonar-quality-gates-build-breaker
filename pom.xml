@@ -369,7 +369,7 @@
         </profile>
 
         <profile>
-            <id>maven-release-jcenter</id>
+            <id>bintray-publish</id>
             <build>
                 <!--
                 ./mvnw -B release:clean release:prepare release:perform \
