@@ -325,8 +325,8 @@
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
                             <releaseProfiles>local-publish</releaseProfiles>
+                            <completionGoals>install clean</completionGoals>
                             <preparationGoals>clean</preparationGoals>
-                            <completionGoals>clean</completionGoals>
                         </configuration>
                     </plugin>
                 </plugins>
