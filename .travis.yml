@@ -53,11 +53,11 @@ cache:
   - ~/.local/bin
   - ~/.docker
   - ~/.m2
-if: tag IS blank
 jobs:
   include:
   - stage: test
     jdk: openjdk8
+    if: tag IS blank
     name: test sonar-breaker-maven-plugin system properties openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -70,6 +70,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk11
+    if: tag IS blank
     name: test env variables SONAR_BREAKER_RETRY openjdk11
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -83,6 +84,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk8
+    if: tag IS blank
     name: test sonar-breaker openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -95,6 +97,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk11
+    if: tag IS blank
     name: test sonar-breaker-maven-plugin openjdk11
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -107,6 +110,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk8
+    if: tag IS blank
     name: test sonar.breaker.retry openjdk8
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -120,6 +124,7 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk11
+    if: tag IS blank
     name: test sonar.breaker.delay openjdk11
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:up
@@ -132,14 +137,17 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk8
+    if: tag IS blank
     name: test local publish openjdk8
     script: cd $TRAVIS_BUILD_DIR && ./mvnw -P local-publish -U
   #  - stage: test
   #    jdk: openjdk8
+  #    if: tag IS blank
   #    name: display-property-updates openjdk8
   #    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   #  - stage: test
   #    jdk: openjdk11
+  #    if: tag IS blank
   #    name: display-property-updates openjdk11
   #    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: deploy
