@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.github.daggerok.sonar</groupId>
+  <artifactId>examples</artifactId>
+  <version>0.0.15-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20190922.174837</timestamp>
+      <buildNumber>2</buildNumber>
+    </snapshot>
+    <lastUpdated>20190922174837</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.15-20190922.174837-2</value>
+        <updated>20190922174837</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
