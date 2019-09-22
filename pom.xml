@@ -353,6 +353,7 @@
                         <configuration>
                             <content>${maven.multiModuleProjectDirectory}/target/.m2/repository/</content>
                             <!--<includes>**/*.*</includes>-->
+                            <skipDeletedFiles>true</skipDeletedFiles>
                             <scmBranch>maven</scmBranch>
                             <tryUpdate>true</tryUpdate>
                         </configuration>
