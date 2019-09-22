@@ -195,16 +195,6 @@ jobs:
     #
     - ./mvnw -pl :docs -P gh-pages
     deploy:
-    - provider: script
-      skip_cleanup: true
-      script: |
-           cd $TRAVIS_BUILD_DIR
-        && ( git remote -v || echo oops1 )
-        && ( git remote add origin https://github.com/daggerok/sonar-quality-gates-build-breaker.git || echo oops2 )
-        && git remote -v
-        && bash ./bin/github-publish.sh
-      on:
-        tags: true
     - provider: pages
       skip-cleanup: true
       keep-history: true
@@ -212,6 +202,16 @@ jobs:
       github-token: "$GITHUB_TOKEN"
       # travis encrypt GITHUB_TOKEN=<your github repo token> --add
       local-dir: ./docs/.vuepress/dist
+      on:
+        tags: true
+    - provider: script
+      skip_cleanup: true
+      script: |
+        cd $TRAVIS_BUILD_DIR
+        && ( git remote -v || echo oops1 )
+        && ( git remote add origin https://github.com/daggerok/sonar-quality-gates-build-breaker.git || echo oops2 )
+        && git remote -v
+        && bash ./bin/github-publish.sh
       on:
         tags: true
 stages:
