@@ -104,6 +104,10 @@ jobs:
     - cd $TRAVIS_BUILD_DIR && ./mvnw -pl :docker docker-compose:down
   - stage: test
     jdk: openjdk8
+    name: test publish locally openjdk8
+    script: cd $TRAVIS_BUILD_DIR && ./mvnw -P publish-locally -U
+  - stage: test
+    jdk: openjdk8
     name: display-property-updates openjdk8
     script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: test
