@@ -53,6 +53,7 @@ cache:
   - ~/.local/bin
   - ~/.docker
   - ~/.m2
+if: tag IS blank
 jobs:
   include:
   - stage: test
