@@ -197,7 +197,12 @@ jobs:
     deploy:
     - provider: script
       skip_cleanup: true
-      script: cd $TRAVIS_BUILD_DIR && ./bin/github-publish.sh
+      script: |
+           cd $TRAVIS_BUILD_DIR
+        && ( git remote -v || echo oops1 )
+        && ( git remote add origin https://github.com/daggerok/sonar-quality-gates-build-breaker.git || echo oops2 )
+        && git remote -v
+        && bash ./bin/github-publish.sh
       on:
         tags: true
     - provider: pages
