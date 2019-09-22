@@ -34,13 +34,18 @@
         <!--<server>
             <id>bintray-[YOUR_USERNAME]-[REPOSITORY_NAME]</id>
             <username>[YOUR_USERNAME]</username>
-            <password>**********</password>
+            <password>[YOUR_API_KEY open: https://bintray.com/profile/edit and click: API KEY]</password>
         </server>-->
         <server>
             <id>bintray-daggerok-daggerok</id>
             <username>daggerok</username>
             <password>**********</password>
         </server>
+        <!--<server>
+            <id>github</id>
+            <username>[GITHUB_USERNAME]</username>
+            <password>[GITHUB_PASSWORD]</password>
+        </server>-->
         <server>
             <id>github</id>
             <username>daggerok</username>

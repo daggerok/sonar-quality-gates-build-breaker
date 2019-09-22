@@ -1,3 +1,4 @@
+.mvn/settings.xml
 .DS_Store
 .gradle/
 target/

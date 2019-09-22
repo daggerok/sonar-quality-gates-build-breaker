@@ -305,12 +305,12 @@
         </profile>
 
         <profile>
-            <id>maven-release-locally</id>
+            <id>release-locally</id>
             <build>
                 <!--
                 ./mvnw  -Dresume=false release:prepare release:perform \
                         -Darguments="-Dmaven.deploy.skip=true" \
-                        -Pmaven-release-locally,publish-locally \
+                        -Prelease-locally,publish-locally \
                         -DgenerateBackupPoms=false \
                         -DskipTests -B -s .mvn/settings.xml
                 -->
