@@ -54,15 +54,22 @@ Release should be found on github project repo release page
 See `./bin/github-publish.sh` script.
 :::
 
-```bash
-
-```
-
-_To be able to depends on published artifacts, add next maven repository_
-
-```xml
-<repository>
-    <id>github-maven-repo</id>
-    <url>https://github.com/daggerok/sonar-quality-gates-build-breaker/tree/maven/</url>
-</repository>
-```
+* first of all create maven branch on github and remove everything from it. so it will be using as new fresh clean maven
+repository
+* secondly prepare your `.mvn/settings.xml` file (see details in it's comments, you need last one: github):
+  ```bash
+  cp -Rf .mvn/settings.template.xml .mvn/settings.xml
+  ```
+* finally publish artifacts locally, so next we can upload them to github project repo in maven branch:
+  ```bash
+  ./mvnw -P local-publish
+  ./mvnw -P github-publish -pl :sonar-quality-gates-build-breaker -s .mvn/settings.xml 
+  ```
+* To use published artifacts dependencies in your other maven project, add next maven repository in your project pom.xml
+  file:
+  ```xml
+  <repository>
+      <id>github-maven-repo</id>
+      <url>https://github.com/daggerok/sonar-quality-gates-build-breaker/tree/maven/</url>
+  </repository>
+  ```
