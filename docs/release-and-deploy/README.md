@@ -139,7 +139,7 @@ _add `distributionManagement` section in your pom.xml_
 <distributionManagement>
     <repository>
         <id>bintray-daggerok-maven</id>
-        <name>bintray-daggerok-maven</name>
+        <name>daggerok-maven</name>
         <url>https://api.bintray.com/maven/daggerok/maven/sonar-quality-gates-build-breaker/;publish=1</url>
     </repository>
 </distributionManagement>
