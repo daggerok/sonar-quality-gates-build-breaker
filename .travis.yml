@@ -204,6 +204,9 @@ jobs:
       local-dir: ./docs/.vuepress/dist
       on:
         tags: true
+    #- provider: script
+    #  skip_cleanup: true
+    #  script: bash -c './bin/local-release.sh'
     - provider: script
       skip_cleanup: true
       script: |
