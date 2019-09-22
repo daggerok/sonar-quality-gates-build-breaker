@@ -24,12 +24,23 @@ See `./bin/local-release.sh` script.
 In case of failure, see `./bin/local-rollback.sh` script. 
 :::
 
+_shorter_
+
 ```bash
-./mvnw -DskipTests -B -s .mvn/settings.xml \
+./mvnw -DskipTests -Dmaven.deploy.skip=true -B -s .mvn/settings.xml \
   -Darguments="-DskipTests -Dmaven.deploy.skip=true" \
   -Dresume=false -DgenerateReleasePoms=false \
   release:prepare release:perform \
   -Plocal-release
+```
+
+_or more verbosely_
+
+```bash
+./mvnw -DskipTests -Dmaven.deploy.skip=true -B -s .mvn/settings.xml \
+  -Dresume=false -DgenerateReleasePoms=false -DtagNameFormat="@{project.version}" \
+  -Darguments="-DskipTests -Dmaven.deploy.skip=true" \
+  release:prepare release:perform
 ```
 
 Release should be found on github project repo release page
