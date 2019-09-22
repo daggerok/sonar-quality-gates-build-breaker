@@ -291,9 +291,9 @@
         </profile>
 
         <profile>
-            <id>publish-locally</id>
+            <id>local-publish</id>
             <build>
-                <!-- ./mvnw -P publish-locally -->
+                <!-- ./mvnw -P local-publish -->
                 <defaultGoal>clean deploy</defaultGoal>
             </build>
             <distributionManagement>
@@ -305,12 +305,12 @@
         </profile>
 
         <profile>
-            <id>release-locally</id>
+            <id>local-release</id>
             <build>
                 <!--
                 ./mvnw  -Dresume=false release:prepare release:perform \
                         -Darguments="-Dmaven.deploy.skip=true" \
-                        -Prelease-locally,publish-locally \
+                        -Plocal-release,local-publish \
                         -DgenerateBackupPoms=false \
                         -DskipTests -B -s .mvn/settings.xml
                 -->
@@ -320,7 +320,7 @@
                         <artifactId>maven-release-plugin</artifactId>
                         <version>${maven-release-plugin.version}</version>
                         <configuration>
-                            <arguments>-DskipTests -Dmaven.deploy.skip=true -Ppublish-locally</arguments>
+                            <arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-publish</arguments>
                             <!--<arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <releaseProfiles>local-maven-repo</releaseProfiles>
@@ -339,7 +339,7 @@
             <build>
                 <!--
                 ./mvnw clean
-                ./mvnw -P publish-locally
+                ./mvnw -P local-publish
                 ./mvnw -P publish-to-github -pl :sonar-quality-gates-build-breaker
                 -->
                 <defaultGoal>scm-publish:publish-scm</defaultGoal>
@@ -370,7 +370,7 @@
             <build>
                 <!--
                 ./mvnw -B release:clean release:prepare release:perform \
-                       -P ,publish-locally \
+                       -P ,local-publish \
                        -Dmaven.deploy.skip=true \
                        -s .m2/settings.xml \
                        -Dresume=false
@@ -398,7 +398,7 @@
             <id>upload-github-release</id>
             <build>
                 <!--
-                release maven artifacts (mvn deploy -P publish-locally) from target/.m2/repository to github repo
+                release maven artifacts (mvn deploy -P local-publish) from target/.m2/repository to github repo
                 ./mvnw clean package
                 ./mvnw -P upload-github-release -pl :sonar-quality-gates-build-breaker
                 -->
