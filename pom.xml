@@ -293,7 +293,7 @@
             <id>local-publish</id>
             <build>
                 <!-- ./mvnw -P local-publish -->
-                <defaultGoal>deploy</defaultGoal>
+                <defaultGoal>clean deploy</defaultGoal>
             </build>
             <distributionManagement>
                 <repository>
