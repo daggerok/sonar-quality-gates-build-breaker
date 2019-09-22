@@ -106,14 +106,14 @@ jobs:
     jdk: openjdk8
     name: test local publish openjdk8
     script: cd $TRAVIS_BUILD_DIR && ./mvnw -P local-publish -U
-  - stage: test
-    jdk: openjdk8
-    name: display-property-updates openjdk8
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
-  - stage: test
-    jdk: openjdk11
-    name: display-property-updates openjdk11
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
+#  - stage: test
+#    jdk: openjdk8
+#    name: display-property-updates openjdk8
+#    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
+#  - stage: test
+#    jdk: openjdk11
+#    name: display-property-updates openjdk11
+#    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
   - stage: deploy
     jdk: openjdk8
     rvm: 2.6.4
