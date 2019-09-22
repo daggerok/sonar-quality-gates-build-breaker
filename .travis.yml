@@ -154,44 +154,13 @@ jobs:
     jdk: openjdk8
     rvm: 2.6.4
     name: Deploy VuePress documentation on GitHub Pages openjdk8
-    #if: branch ~= /master/ AND (type NOT IN (pull_request))
-    if: tag IS present
+    ##if: branch ~= /master/ AND (type NOT IN (pull_request))
+    #if: tag IS present
     script: skip
     before_deploy:
-    - echo '<?xml version="1.0" encoding="UTF-8" ?>                                                                             ' > .mvn/settings.xml
-    - echo '<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"' >> .mvn/settings.xml
-    - echo '          xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">     ' >> .mvn/settings.xml
-    - echo '    <profiles><profile>                                                                                             ' >> .mvn/settings.xml
-    - echo '      <repositories>                                                                                                ' >> .mvn/settings.xml
-    - echo '        <repository>                                                                                                ' >> .mvn/settings.xml
-    - echo '          <snapshots><enabled>false</enabled></snapshots>                                                           ' >> .mvn/settings.xml
-    - echo '          <id>bintray-daggerok-maven</id>                                                                        ' >> .mvn/settings.xml
-    - echo '          <name>bintray</name>                                                                                      ' >> .mvn/settings.xml
-    - echo '          <url>https://dl.bintray.com/daggerok/maven</url>                                                       ' >> .mvn/settings.xml
-    - echo '        </repository>                                                                                               ' >> .mvn/settings.xml
-    - echo '      </repositories>                                                                                               ' >> .mvn/settings.xml
-    - echo '      <pluginRepositories>                                                                                          ' >> .mvn/settings.xml
-    - echo '        <pluginRepository>                                                                                          ' >> .mvn/settings.xml
-    - echo '          <snapshots><enabled>false</enabled></snapshots>                                                           ' >> .mvn/settings.xml
-    - echo '          <id>bintray-daggerok-maven</id>                                                                        ' >> .mvn/settings.xml
-    - echo '          <name>bintray-plugins</name>                                                                              ' >> .mvn/settings.xml
-    - echo '          <url>https://dl.bintray.com/daggerok/maven</url>                                                       ' >> .mvn/settings.xml
-    - echo '        </pluginRepository>                                                                                         ' >> .mvn/settings.xml
-    - echo '      </pluginRepositories>                                                                                         ' >> .mvn/settings.xml
-    - echo '      <id>bintray</id>                                                                                              ' >> .mvn/settings.xml
-    - echo '</profile></profiles>                                                                                               ' >> .mvn/settings.xml
-    - echo '<activeProfiles><activeProfile>bintray</activeProfile></activeProfiles>                                             ' >> .mvn/settings.xml
-    - echo '<servers><server>                                                                                                   ' >> .mvn/settings.xml
-    - echo '  <id>bintray-daggerok-maven</id>                                                                                ' >> .mvn/settings.xml
-    - echo '  <username>daggerok</username>                                                                                     ' >> .mvn/settings.xml
-    - echo "  <password>${BINTRAY_API_KEY}</password>                                                                           " >> .mvn/settings.xml
-    - echo '</server><server>                                                                                                   ' >> .mvn/settings.xml
-    - echo '  <id>github</id>                                                                                                   ' >> .mvn/settings.xml
-    - echo '  <username>daggerok</username>                                                                                     ' >> .mvn/settings.xml
-    - echo "  <password>${GITHUB_PASSWORD}</password>                                                                           " >> .mvn/settings.xml
-    - echo '</server>                                                                                                           ' >> .mvn/settings.xml
-    - echo '</servers>                                                                                                          ' >> .mvn/settings.xml
-    - echo '</settings>                                                                                                         ' >> .mvn/settings.xml
+    - mkdir -p ~/.m2
+    - cat .mvn/settings.travis.xml > .mvn/settings.xml
+    - cat .mvn/settings.travis.xml > ~/.m2/settings.xml
     #
     - ./mvnw -pl :docs -P gh-pages
     deploy:
@@ -206,16 +175,19 @@ jobs:
         tags: true
     #- provider: script
     #  skip_cleanup: true
-    #  script: bash -c './bin/local-release.sh'
+    #  script: ./bin/local-release.sh
+    #  on:
+    #    branch: master
     #- provider: script
     #  skip_cleanup: true
-    #  script: cd $TRAVIS_BUILD_DIR
-    #    && ( git remote -v || echo oops1 )
-    #    && ( git remote add origin https://github.com/daggerok/sonar-quality-gates-build-breaker.git || echo oops2 )
-    #    && git remote -v
-    #    && bash ./bin/github-publish.sh
+    #  script: ./bin/github-publish.sh
     #  on:
     #    tags: true
+    #- provider: script
+    #  skip_cleanup: true
+    #  script: ./bin/bintray-all.sh
+    #  on:
+    #    branch: master
 stages:
 - test
 - deploy
