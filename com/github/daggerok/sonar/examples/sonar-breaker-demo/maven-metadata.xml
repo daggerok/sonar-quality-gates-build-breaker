@@ -4,8 +4,8 @@
   <artifactId>sonar-breaker-demo</artifactId>
   <versioning>
     <versions>
-      <version>0.0.16-SNAPSHOT</version>
+      <version>0.0.17-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20190922180123</lastUpdated>
+    <lastUpdated>20190922181246</lastUpdated>
   </versioning>
 </metadata>

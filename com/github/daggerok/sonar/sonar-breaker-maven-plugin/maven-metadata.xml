@@ -3,10 +3,10 @@
   <groupId>com.github.daggerok.sonar</groupId>
   <artifactId>sonar-breaker-maven-plugin</artifactId>
   <versioning>
-    <latest>0.0.16-SNAPSHOT</latest>
+    <latest>0.0.17-SNAPSHOT</latest>
     <versions>
-      <version>0.0.16-SNAPSHOT</version>
+      <version>0.0.17-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20190922180120</lastUpdated>
+    <lastUpdated>20190922181243</lastUpdated>
   </versioning>
 </metadata>

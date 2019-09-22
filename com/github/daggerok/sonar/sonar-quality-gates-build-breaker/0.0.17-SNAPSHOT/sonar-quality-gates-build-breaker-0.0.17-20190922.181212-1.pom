@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.daggerok.sonar</groupId>
+    <description>SonarQube 💥 Build Breaker - fail pipeline builds according to its Quality Gates️ analysis</description>
+    <artifactId>sonar-quality-gates-build-breaker</artifactId>
+    <version>0.0.17-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>docker</module>
+        <module>sonar-breaker</module>
+        <module>sonar-breaker-maven-plugin</module>
+        <module>examples</module>
+        <module>docs</module>
+    </modules>
+
+    <properties>
+        <mainClass />
+
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <!--<sonar.login>admin</sonar.login>
+        <sonar.password>admin</sonar.password>-->
+        <sonar.host.url>http://127.0.0.1:80</sonar.host.url>
+        <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
+
+        <frontend-maven-plugin.version>1.8.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.npmVersion>6.11.3</frontend-maven-plugin.npmVersion>
+        <frontend-maven-plugin.nodeVersion>v12.10.0</frontend-maven-plugin.nodeVersion>
+
+        <maven.version>[3.3.9,)</maven.version>
+        <!-- <maven.version>3.6.2</maven.version> -->
+        <maven-plugin-plugin.version>3.6.0</maven-plugin-plugin.version>
+
+        <vavr.version>0.10.2</vavr.version>
+        <log4j.version>2.12.1</log4j.version>
+        <lombok.version>1.18.10</lombok.version>
+        <retrofit.version>2.6.1</retrofit.version>
+        <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+        <github-release-plugin.version>1.3.0</github-release-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-scm-publish-plugin.version>3.0.0</maven-scm-publish-plugin.version>
+        <maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
+        <docker-compose-maven-plugin.version>2.5.1</docker-compose-maven-plugin.version>
+        <spring-boot-starter-parent.version>2.1.8.RELEASE</spring-boot-starter-parent.version>
+    </properties>
+
+    <developers>
+        <developer>
+            <name>Maksim Kostromin</name>
+            <email>daggerok@gmail.com</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/daggerok/sonar-quality-gates-build-breaker/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <developerConnection>scm:git:git@github.com:daggerok/sonar-quality-gates-build-breaker.git</developerConnection>
+        <connection>scm:git:https://github.com/daggerok/sonar-quality-gates-build-breaker.git</connection>
+        <url>https://github.com/daggerok/sonar-quality-gates-build-breaker.git</url>
+        <!-- <tag>master</tag> -->
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- internal modules -->
+            <dependency>
+                <groupId>com.github.daggerok.sonar</groupId>
+                <artifactId>sonar-breaker</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.daggerok.sonar</groupId>
+                <artifactId>sonar-breaker-maven-plugin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- in java we trust -->
+            <dependency>
+                <groupId>io.vavr</groupId>
+                <artifactId>vavr</artifactId>
+                <version>${vavr.version}</version>
+            </dependency>
+            <!-- logging -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!-- rest api -->
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-jackson</artifactId>
+                <version>${retrofit.version}</version>
+                <type>jar</type>
+            </dependency>
+            <!-- custom maven plugin -->
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${maven-plugin-annotations.version}</version>
+                <type>jar</type>
+            </dependency>
+            <!-- demo projects -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring-boot-starter-parent.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>install node and npm</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                        </execution>
+                        <execution>
+                            <id>npm install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>install</arguments>
+                            </configuration>
+                            <phase>process-resources</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skip>true</skip>
+                        <npmVersion>${frontend-maven-plugin.npmVersion}</npmVersion>
+                        <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                        <workingDirectory>${maven.multiModuleProjectDirectory}/docs</workingDirectory>
+                        <installDirectory>${maven.multiModuleProjectDirectory}/target</installDirectory>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.dkanejs.maven.plugins</groupId>
+                    <artifactId>docker-compose-maven-plugin</artifactId>
+                    <version>${docker-compose-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>up</id>
+                            <goals>
+                                <goal>up</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>down</id>
+                            <goals>
+                                <goal>down</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>help</id>
+                            <goals>
+                                <goal>help</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skip>true</skip>
+                        <composeFiles>
+                            <composeFile>${maven.multiModuleProjectDirectory}/docker/docker-compose.yaml</composeFile>
+                        </composeFiles>
+                        <detachedMode>true</detachedMode>
+                        <removeVolumes>true</removeVolumes>
+                        <removeOrphans>true</removeOrphans>
+                        <removeImages>true</removeImages>
+                        <removeImagesType>local</removeImagesType>
+                        <build>true</build>
+                        <detail>true</detail>
+                        <verbose>false</verbose>
+                        <projectName>sonar</projectName>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>assemble-jar-with-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                        <archive>
+                            <manifest>
+                                <mainClass>${mainClass}</mainClass>
+                            </manifest>
+                        </archive>
+                        <finalName>${project.artifactId}-${project.version}-all</finalName>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.chrisdchristo</groupId>
+                    <artifactId>capsule-maven-plugin</artifactId>
+                    <version>${capsule-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                            <configuration>
+                                <fileDesc>-all</fileDesc>
+                                <appClass>${mainClass}</appClass>
+                                <type>fat</type>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <build>
+                <defaultGoal>clean install sonar:sonar</defaultGoal>
+            </build>
+        </profile>
+
+        <profile>
+            <id>local-publish</id>
+            <build>
+                <!-- ./mvnw -P local-publish -->
+                <defaultGoal>deploy</defaultGoal>
+            </build>
+            <distributionManagement>
+                <repository>
+                    <id>local-maven-repo</id>
+                    <url>file://${maven.multiModuleProjectDirectory}/target/.m2/repository</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>local-release</id>
+            <build>
+                <!--
+                ./mvnw  -Dresume=false release:prepare release:perform \
+                        -Darguments="-Dmaven.deploy.skip=true" \
+                        -Plocal-release,local-publish \
+                        -DgenerateBackupPoms=false \
+                        -DskipTests -B -s .mvn/settings.xml
+                -->
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven-release-plugin.version}</version>
+                        <configuration>
+                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
+                            <generateReleasePoms>false</generateReleasePoms>
+                            <resume>false</resume>
+                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
+                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
+                            <!--<releaseProfiles>local-publish</releaseProfiles>
+                            <preparationGoals>clean</preparationGoals>
+                            <completionGoals>clean</completionGoals>-->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>github-publish</id>
+            <build>
+                <!--
+                at first time:
+                1) cp .mvn/settings.template.xml settings.xml and update it accordingly
+                2) on github project repo create maven branch to be used for publishing artifacts
+                ./mvnw -P local-publish ; ./mvnw -P github-publish -pl :sonar-quality-gates-build-breaker -s .mvn/settings.xml
+                -->
+                <defaultGoal>scm-publish:publish-scm</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-publish-plugin</artifactId>
+                        <version>${maven-scm-publish-plugin.version}</version>
+                        <configuration>
+                            <content>${maven.multiModuleProjectDirectory}/target/.m2/repository/</content>
+                            <!--<includes>**/*.*</includes>-->
+                            <skipDeletedFiles>true</skipDeletedFiles>
+                            <scmBranch>maven</scmBranch>
+                            <tryUpdate>true</tryUpdate>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <site>
+                    <id>daggerok-github</id>
+                    <url>${project.scm.developerConnection}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>maven-release-jcenter</id>
+            <build>
+                <!--
+                ./mvnw -B release:clean release:prepare release:perform \
+                       -P ,local-publish \
+                       -Dmaven.deploy.skip=true \
+                       -s .m2/settings.xml \
+                       -Dresume=false
+                -->
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven-release-plugin.version}</version>
+                        <configuration>
+                            <!--<arguments>-DskipTests</arguments>-->
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <generateReleasePoms>false</generateReleasePoms>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
+                            <preparationGoals>clean</preparationGoals>
+                            <completionGoals>clean</completionGoals>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>upload-github-release</id>
+            <build>
+                <!--
+                release maven artifacts (mvn deploy -P local-publish) from target/.m2/repository to github repo
+                ./mvnw clean package
+                ./mvnw -P upload-github-release -pl :sonar-quality-gates-build-breaker
+                -->
+                <defaultGoal>de.jutzig:github-release-plugin:${github-release-plugin.version}:release</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>de.jutzig</groupId>
+                        <artifactId>github-release-plugin</artifactId>
+                        <version>${github-release-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>release</id>
+                                <phase>deploy</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <overwriteArtifact>true</overwriteArtifact>
+                            <description>${project.artifactId} release</description>
+                            <releaseName>v${project.version}</releaseName>
+                            <tag>${project.version}</tag>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${maven.multiModuleProjectDirectory}</directory>
+                                    <includes>
+                                        <include>*.md</include>
+                                    </includes>
+                                </fileSet>
+                                <fileSet>
+                                    <directory>${maven.multiModuleProjectDirectory}</directory>
+                                    <includes>
+                                        <include>**/target/*.jar</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-daggerok-daggerok</id>
+            <name>daggerok-daggerok</name>
+            <url>https://api.bintray.com/maven/daggerok/daggerok/sonar-quality-gates-build-breaker/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
+</project>

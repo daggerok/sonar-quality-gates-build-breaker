@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.github.daggerok.sonar</groupId>
+  <artifactId>sonar-breaker</artifactId>
+  <version>0.0.17-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20190922.181241</timestamp>
+      <buildNumber>2</buildNumber>
+    </snapshot>
+    <lastUpdated>20190922181241</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.0.17-20190922.181241-2</value>
+        <updated>20190922181241</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.17-20190922.181241-2</value>
+        <updated>20190922181241</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
