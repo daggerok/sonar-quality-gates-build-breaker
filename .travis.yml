@@ -185,9 +185,9 @@ jobs:
     #
     - ./mvnw -pl :docs -P gh-pages
     deploy:
-    - provider: script
-      skip_cleanup: true
-      script: bash -c './bin/local-release.sh'
+    #- provider: script
+    #  skip_cleanup: true
+    #  script: bash -c './bin/local-release.sh'
     - provider: pages
       skip-cleanup: true
       keep-history: true
