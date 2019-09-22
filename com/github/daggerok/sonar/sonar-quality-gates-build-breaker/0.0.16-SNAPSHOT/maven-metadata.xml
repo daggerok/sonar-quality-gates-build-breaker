@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.github.daggerok.sonar</groupId>
+  <artifactId>sonar-quality-gates-build-breaker</artifactId>
+  <version>0.0.16-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20190922.180115</timestamp>
+      <buildNumber>2</buildNumber>
+    </snapshot>
+    <lastUpdated>20190922180115</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.0.16-20190922.180115-2</value>
+        <updated>20190922180115</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
