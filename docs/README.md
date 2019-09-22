@@ -2,9 +2,9 @@
 home: true
 meta:
   - name: description
-    content: SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker
+    content: SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed
   - name: keywords
-    content: sonar-breaker break-sonar sonarqube sonar sonarqube-plugin sonarqube-scanner sonar-scanner sonar-plugin sonar-maven-plugin github-pages github-tags https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker daggerok/sonar-quality-gates-build-breaker sonar-quality-gates-build-breaker 
+    content: sonar-breaker break-sonar sonarqube sonar sonarqube-plugin sonarqube-scanner sonar-scanner sonar-plugin sonar-maven-plugin github-pages github-tags
 ---
 
 # SonarQube Build Breaker 
