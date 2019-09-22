@@ -1,6 +1,7 @@
 package com.github.daggerok.sonarbreaker;
 
 import com.github.daggerok.sonarbreaker.infrastructure.Config;
+import com.github.daggerok.sonarbreaker.infrastructure.Env;
 import com.github.daggerok.sonarbreaker.infrastructure.Result;
 import com.github.daggerok.sonarbreaker.sonar.fs.SonarReportTask;
 import com.github.daggerok.sonarbreaker.sonar.rest.SonarClient;
@@ -25,6 +26,7 @@ import static java.util.Objects.requireNonNull;
  * java -jar sonar-breaker.jar ./target/sonar/report-task.txt
  * java -Dsonar.breaker.retry=25 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  * java -Dsonar.breaker.delay=5 -Dsonar.breaker.retry=5 -jar sonar-breaker.jar ./target/sonar/report-task.txt
+ * java -Dsonar.breaker.ignores=new_coverage -jar sonar-breaker.jar ./target/sonar/report-task.txt
  */
 @Log4j2
 public class SonarBreaker {
@@ -47,8 +49,8 @@ public class SonarBreaker {
                 .build()
                 .create(SonarClient.class);
 
-        final int maxRetries = Integer.parseInt(Config.get("sonar.breaker.retry", "100"));
-        final int delay = Integer.parseInt(Config.get("sonar.breaker.delay", "1"));
+        final int maxRetries = Integer.parseInt(Config.get(Env.SONAR_BREAKER_RETRY));
+        final int delay = Integer.parseInt(Config.get(Env.SONAR_BREAKER_DELAY));
 
         String analysisId = null;
         int retry = maxRetries;
@@ -82,6 +84,7 @@ public class SonarBreaker {
 
         final val call = sonar.getProjectStatus(analysisId);
         final Response<ProjectStatusResponse> response = call.execute();
+        log.debug("Quality gates status available here: {}", call.request().url());
 
         if (!response.isSuccessful()) {
             final String error = format("%n%s", requireNonNull(response.errorBody(), "response failed.").string());
@@ -89,8 +92,9 @@ public class SonarBreaker {
             return;
         }
 
-        ProjectStatusResponse body = response.body();
+        final val body = response.body();
         final val maybeBody = Optional.ofNullable(body);
+
         if (!maybeBody.isPresent()) {
             Result.QUALITY_GATES_EMPTY_RESPONSE.fail();
             return;
@@ -98,16 +102,21 @@ public class SonarBreaker {
 
         final val maybeProjectStatus = maybeBody.map(ProjectStatusResponse::getProjectStatus);
         final val maybeStatus = maybeProjectStatus.map(ProjectStatus::getStatus);
+
         if (!maybeStatus.isPresent()) {
             Result.QUALITY_GATES_STATUS_FAILED.fail();
             return;
         }
 
         final String status = maybeStatus.get();
+        final val projectStatus = maybeProjectStatus.get();
+
         if (!"OK".equalsIgnoreCase(status)) {
-            final ProjectStatus ps = maybeProjectStatus.get();
-            Result.QUALITY_GATES_FAILED.fail(ps.failedConditions());
-            return;
+            final val hasErrors = projectStatus.failedConditions().size() > 0;
+            if (hasErrors) {
+                Result.QUALITY_GATES_FAILED.fail();
+                return;
+            }
         }
 
         Result.BUILD_SUCCESS.complete();

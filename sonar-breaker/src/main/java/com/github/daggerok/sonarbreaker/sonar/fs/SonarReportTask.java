@@ -1,6 +1,7 @@
 package com.github.daggerok.sonarbreaker.sonar.fs;
 
 import com.github.daggerok.sonarbreaker.infrastructure.Config;
+import com.github.daggerok.sonarbreaker.infrastructure.Env;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -22,7 +23,7 @@ public class SonarReportTask {
 
     public static SonarReportTask of(final String filePath) {
         final String path = Optional.ofNullable(filePath)
-                                    .orElse(Config.get("sonar.report.task", "target/sonar/report-task.txt"));
+                                    .orElse(Config.get(Env.SONAR_REPORT_TASK));
         return new SonarReportTask().withProperties(path);
     }
 

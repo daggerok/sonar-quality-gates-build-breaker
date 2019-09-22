@@ -19,6 +19,6 @@ public class Condition {
     private String actualValue;
 
     public boolean isBroken() {
-        return Objects.isNull(metricKey) || !"OK".equalsIgnoreCase(metricKey);
+        return Objects.isNull(metricKey) || !"OK".equals(status);
     }
 }

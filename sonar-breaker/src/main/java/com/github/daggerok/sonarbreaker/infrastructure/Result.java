@@ -25,16 +25,21 @@ public enum Result {
     @Getter
     private final int exitCode;
 
-    public void fail(final String... messages) {
-        log.error(message);
-        Arrays.stream(messages)
+    private void withErrors(final String... withErrors) {
+        Arrays.stream(withErrors)
               .filter(Objects::nonNull)
               .map(Objects::toString)
               .forEach(log::error);
+    }
+
+    public void fail(final String... withErrors) {
+        withErrors(withErrors);
+        log.error(message);
         System.exit(exitCode);
     }
 
-    public void complete() {
+    public void complete(final String... withErrors) {
+        withErrors(withErrors);
         log.info(BUILD_SUCCESS.message);
         System.exit(BUILD_SUCCESS.exitCode);
     }
