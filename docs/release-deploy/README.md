@@ -28,15 +28,16 @@ _shorter_
 
 ```bash
 ./mvnw -Plocal-release -B -s .mvn/settings.xml \
-    release:prepare release:perform
+    release:clean release:prepare release:perform
 ```
 
 _or more verbosely_
 
 ```bash
 ./mvnw -DskipTests -Dmaven.deploy.skip=true -B -s .mvn/settings.xml \
-  -Dresume=false -DgenerateReleasePoms=false -DtagNameFormat="@{project.version}" \
   -Darguments="-DskipTests -Dmaven.deploy.skip=true" \
+  -Dresume=false -DgenerateReleasePoms=false \
+  -DtagNameFormat="@{project.version}" \
   release:prepare release:perform
 ```
 
