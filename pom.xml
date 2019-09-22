@@ -73,8 +73,8 @@
         <developerConnection>scm:git:git@github.com:daggerok/sonar-quality-gates-build-breaker.git</developerConnection>
         <connection>scm:git:https://github.com/daggerok/sonar-quality-gates-build-breaker.git</connection>
         <url>https://github.com/daggerok/sonar-quality-gates-build-breaker.git</url>
-        <!--<tag>master</tag>-->
-        <tag>HEAD</tag>
+        <!-- <tag>HEAD</tag> -->
+        <tag>master</tag>
     </scm>
 
     <dependencyManagement>
