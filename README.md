@@ -35,8 +35,9 @@ See: https://daggerok.github.io/sonar-quality-gates-build-breaker/
 * https://mitrai.com/tech-guide/using-sonarqube-to-automate-quality-checks-for-your-maven-project/
 * [How to publish maven projects to JCenter](https://github.com/daggerok/publish-maven-project-to-jcenter)
 
-_NOTE, this project has been based on 
-[daggerok/main-starter](https://github.com/daggerok/main-starter/tree/maven-java),
-[daggerok/sonarqube-maven-poc](https://github.com/daggerok/sonarqube-maven-poc), and
-[daggerok/publish-maven-project-to-jcenter](https://github.com/daggerok/publish-maven-project-to-jcenter)
-repositories_
+**NOTE** this project has been based on:
+
+* [daggerok/main-starter](https://github.com/daggerok/main-starter/tree/maven-java)
+* [daggerok/sonarqube-maven-poc](https://github.com/daggerok/sonarqube-maven-poc)
+* [daggerok/publish-maven-project-to-jcenter](https://github.com/daggerok/publish-maven-project-to-jcenter)
+* [daggerok/deventstore](https://github.com/daggerok/deventstore)
