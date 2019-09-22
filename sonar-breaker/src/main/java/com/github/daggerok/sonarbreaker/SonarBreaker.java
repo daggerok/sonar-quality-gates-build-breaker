@@ -27,6 +27,7 @@ import static java.util.Objects.requireNonNull;
  * java -Dsonar.breaker.retry=25 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  * java -Dsonar.breaker.delay=5 -Dsonar.breaker.retry=5 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  * java -Dsonar.breaker.ignores=new_coverage -jar sonar-breaker.jar ./target/sonar/report-task.txt
+ * SONAR_BREAKER_METRICS_EXCLUDES=new_coverage java -jar sonar-breaker.jar ./target/sonar/report-task.txt
  */
 @Log4j2
 public class SonarBreaker {
