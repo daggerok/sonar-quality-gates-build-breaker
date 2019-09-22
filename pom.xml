@@ -168,10 +168,10 @@
                     <executions>
                         <execution>
                             <id>install node and npm</id>
-                            <phase>process-resources</phase>
                             <goals>
                                 <goal>install-node-and-npm</goal>
                             </goals>
+                            <phase>process-resources</phase>
                         </execution>
                         <execution>
                             <id>npm install</id>
@@ -238,18 +238,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>${maven-assembly-plugin.version}</version>
-                    <configuration>
-                        <finalName>${project.artifactId}-${project.version}-all</finalName>
-                        <appendAssemblyId>false</appendAssemblyId>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <archive>
-                            <manifest>
-                                <mainClass>${mainClass}</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
                     <executions>
                         <execution>
                             <id>assemble-jar-with-dependencies</id>
@@ -259,6 +247,18 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                        <archive>
+                            <manifest>
+                                <mainClass>${mainClass}</mainClass>
+                            </manifest>
+                        </archive>
+                        <finalName>${project.artifactId}-${project.version}-all</finalName>
+                    </configuration>
                 </plugin>
 
                 <plugin>
