@@ -6,7 +6,7 @@
         <Property name="PID">%style{%pid}{magenta}</Property>
         <Property name="SEPARATOR">%style{---}{faint}</Property>
         <Property name="THREAD">%style{[ %4.4t ]}{faint}</Property>
-        <Property name="CLASS">%style{%-27.27c{1.}}{cyan}</Property>
+        <Property name="CLASS">%style{%-32.32c{1.}}{cyan}</Property>
         <Property name="METHOD">%style{%-10.10M}{yellow}</Property>
         <Property name="COLUMN">%style{:}{faint}</Property>
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xEx</Property>

@@ -6,7 +6,6 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -26,21 +25,17 @@ public enum Result {
     @Getter
     private final int exitCode;
 
-    public Result withMessage(final String... messages) {
-        log.info(() -> message);
-        if (messages.length > 0)
-            log.info(() -> Arrays.stream(messages)
-                                 .filter(Objects::nonNull)
-                                 .map(Objects::toString)
-                                 .collect(Collectors.joining("\n")));
-        return this;
-    }
-
-    public void fail() {
+    public void fail(final String... messages) {
+        log.error(message);
+        Arrays.stream(messages)
+              .filter(Objects::nonNull)
+              .map(Objects::toString)
+              .forEach(log::error);
         System.exit(exitCode);
     }
 
-    public void done() {
+    public void complete() {
+        log.info(BUILD_SUCCESS.message);
         System.exit(BUILD_SUCCESS.exitCode);
     }
 }

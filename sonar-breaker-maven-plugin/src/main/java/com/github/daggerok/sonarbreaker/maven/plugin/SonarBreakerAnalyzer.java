@@ -1,6 +1,6 @@
 package com.github.daggerok.sonarbreaker.maven.plugin;
 
-import com.github.daggerok.sonarbreaker.Main;
+import com.github.daggerok.sonarbreaker.SonarBreaker;
 import io.vavr.control.Try;
 import lombok.extern.log4j.Log4j2;
 import org.apache.maven.plugin.AbstractMojo;
@@ -35,7 +35,7 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * Requires: maven >= 3.3.9
      */
     @Parameter(property = "sonar.breaker.root", defaultValue = "${maven.multiModuleProjectDirectory}")
-    private String multiModuleBaseDirname;
+    private String sonarBreakerRoot;
 
     /**
      * SonarQube analysis result (goal sonar:sonar).
@@ -47,7 +47,7 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      */
     @Parameter(property = "sonar.breaker.reportTaskTxt"/*,
                defaultValue = "${maven.multiModuleProjectDirectory}/target/sonar/report-task.txt"*/)
-    private File reportTaskTxt;
+    private File sonarBreakerReportTaskTxt;
 
     /**
      * Specify whenever plugin execution can fail.
@@ -77,12 +77,11 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
         else if (!sonarReportFile.canRead() && !allowFailure) throw error.apply("read");
 
         final String path = sonarReportFile.getAbsolutePath();
-        log.info("{} analysis...", path);
+        log.debug("Process {}", () -> path);
 
-        final Try<Void> aTry = Try.run(() -> Main.main(Stream.of(path).toArray(String[]::new)))
-                                  .onFailure(e -> log.warn("{}\n{}", e.getLocalizedMessage(), e))
-                                  .andFinally(() -> log.info("Analysis done!"));
-
+        final Try<Void> aTry = Try.run(() -> SonarBreaker.main(Stream.of(path).toArray(String[]::new)))
+                                  .onFailure(e -> log.error("{}\n{}", e.getLocalizedMessage(), e))
+                                  .andFinally(() -> log.info(() -> "Analysis done!"));
         if (aTry.isSuccess()) {
             aTry.get();
             return;
@@ -96,8 +95,8 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
     }
 
     private File findSonarQubeReportTaskTxtFile() {
-        return Optional.ofNullable(reportTaskTxt)
-                       .orElse(Paths.get(multiModuleBaseDirname, "target", "sonar", "report-task.txt")
+        return Optional.ofNullable(sonarBreakerReportTaskTxt)
+                       .orElse(Paths.get(sonarBreakerRoot, "target", "sonar", "report-task.txt")
                                     .toFile());
     }
 }

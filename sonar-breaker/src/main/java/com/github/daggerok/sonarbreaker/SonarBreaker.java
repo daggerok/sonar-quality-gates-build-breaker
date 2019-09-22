@@ -2,7 +2,7 @@ package com.github.daggerok.sonarbreaker;
 
 import com.github.daggerok.sonarbreaker.infrastructure.Config;
 import com.github.daggerok.sonarbreaker.infrastructure.Result;
-import com.github.daggerok.sonarbreaker.sonar.fs.ReportTask;
+import com.github.daggerok.sonarbreaker.sonar.fs.SonarReportTask;
 import com.github.daggerok.sonarbreaker.sonar.rest.SonarClient;
 import com.github.daggerok.sonarbreaker.sonar.rest.api.ce.TaskResponse;
 import com.github.daggerok.sonarbreaker.sonar.rest.api.qualitygates.ProjectStatus;
@@ -27,7 +27,7 @@ import static java.util.Objects.requireNonNull;
  * java -Dsonar.breaker.delay=5 -Dsonar.breaker.retry=5 -jar sonar-breaker.jar ./target/sonar/report-task.txt
  */
 @Log4j2
-public class Main {
+public class SonarBreaker {
 
     @SneakyThrows
     public static void main(final String[] args) { // NOSONAR
@@ -36,15 +36,13 @@ public class Main {
         if (args.length != 1) {
             final String actual = String.join(", ", args);
             final String error = format("arguments amount: %d (%s)", args.length, actual);
-            Result.USAGE.withMessage(error).fail();
+            Result.USAGE.fail(error);
             return;
         }
 
-        final ReportTask reportTask = ReportTask.of(args[0]);
-        reportTask.printBuildInfo();
-
+        final SonarReportTask sonarReportTask = SonarReportTask.of(args[0]);
         final SonarClient sonar = new Retrofit.Builder()
-                .baseUrl(reportTask.getServerUrl())
+                .baseUrl(sonarReportTask.getServerUrl())
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
                 .create(SonarClient.class);
@@ -57,25 +55,25 @@ public class Main {
 
         while (analysisId == null && retry-- > 0) {
 
-            final val analysis = sonar.getTask(reportTask.getCeTaskId());
+            final val analysis = sonar.getTask(sonarReportTask.getCeTaskId());
             final Response<TaskResponse> response = analysis.execute();
 
             if (!response.isSuccessful()) {
                 String error = new String(requireNonNull(response.errorBody(), "response failed.").bytes());
-                Result.QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
+                Result.QUALITY_GATES_RESPONSE_FAILED.fail(error);
                 return;
             }
 
             final TaskResponse body = response.body();
             final String status = requireNonNull(body, "oops 3.5").getTask().getStatus();
-            log.info("{} retries left for analysis ({})", retry, status.toLowerCase().replaceAll("_", " "));
+            log.debug("{} retries left for analysis ({})", retry, status.toLowerCase().replaceAll("_", " "));
 
             if (!asList("SUCCESS", "FAILED").contains(status)) {
                 TimeUnit.SECONDS.sleep(delay);
                 if (retry > 0) continue;
 
                 final String error = format("stop waiting after %s tries", maxRetries);
-                Result.TIMEOUT_EXCEEDED.withMessage(error).fail();
+                Result.TIMEOUT_EXCEEDED.fail(error);
                 return;
             }
 
@@ -87,31 +85,31 @@ public class Main {
 
         if (!response.isSuccessful()) {
             final String error = format("%n%s", requireNonNull(response.errorBody(), "response failed.").string());
-            Result.QUALITY_GATES_RESPONSE_FAILED.withMessage(error).fail();
+            Result.QUALITY_GATES_RESPONSE_FAILED.fail(error);
             return;
         }
 
         ProjectStatusResponse body = response.body();
         final val maybeBody = Optional.ofNullable(body);
         if (!maybeBody.isPresent()) {
-            Result.QUALITY_GATES_EMPTY_RESPONSE.withMessage().fail();
+            Result.QUALITY_GATES_EMPTY_RESPONSE.fail();
             return;
         }
 
         final val maybeProjectStatus = maybeBody.map(ProjectStatusResponse::getProjectStatus);
         final val maybeStatus = maybeProjectStatus.map(ProjectStatus::getStatus);
         if (!maybeStatus.isPresent()) {
-            Result.QUALITY_GATES_STATUS_FAILED.withMessage().fail();
+            Result.QUALITY_GATES_STATUS_FAILED.fail();
             return;
         }
 
         final String status = maybeStatus.get();
         if (!"OK".equalsIgnoreCase(status)) {
             final ProjectStatus ps = maybeProjectStatus.get();
-            Result.QUALITY_GATES_FAILED.withMessage(ps.failedConditions()).fail();
+            Result.QUALITY_GATES_FAILED.fail(ps.failedConditions());
             return;
         }
 
-        Result.BUILD_SUCCESS.withMessage().done();
+        Result.BUILD_SUCCESS.complete();
     }
 }
