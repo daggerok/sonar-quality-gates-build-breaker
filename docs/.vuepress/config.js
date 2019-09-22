@@ -8,6 +8,16 @@ module.exports = {
     base: baseHref,
     themeConfig: {
         repo: 'daggerok/sonar-quality-gates-build-breaker',
+        nav: [
+            { text: 'Home', link: '/', },
+            { text: 'Write custom maven plugin', link: '/write-custom-maven-plugin/', },
+            { text: 'Release and deploy', link: '/release-and-deploy/', },
+        ],
+        sidebar: [
+            '/',
+            '/write-custom-maven-plugin/',
+            '/release-and-deploy/',
+        ]
     },
     markdown: {
         lineNumbers: true,
@@ -15,18 +25,13 @@ module.exports = {
             md.use(require('markdown-it-vuepress-code-snippet-enhanced'))
         }
     },
-    nav: [
-        {
-            text: 'Home',
-            link: '/',
-        },
-        {
-            text: 'Write custom maven plugin',
-            link: '/write-custom-maven-plugin/',
-        },
-        {
-            text: 'Release and deploy',
-            link: '/release-and-deploy/',
-        },
+    plugins: [
+        'tag',
+        'category',
+        '@vuepress/back-to-top',
+        '@vuepress/last-updated',
+        '@vuepress/medium-zoom',
+        '@vuepress/nprogress',
+        '@vuepress/nprogress',
     ],
 };

@@ -1,10 +1,20 @@
 ---
 home: true
+heroText: SonarQube Build Breaker
+tagline: |
+  SonarQube Build Breaker designed to fail SonarQube analysis 
+  during CI pipeline build if quality grates not passed
 meta:
   - name: description
-    content: SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed
+    content: |
+      SonarQube Build Breaker designed to fail SonarQube analysis
+      during CI pipeline build if quality grates not passed
   - name: keywords
-    content: sonar-breaker break-sonar sonarqube sonar sonarqube-plugin sonarqube-scanner sonar-scanner sonar-plugin sonar-maven-plugin github-pages github-tags
+    content: |
+      sonar-breaker break-sonar sonarqube sonar sonarqube-plugin
+      sonarqube-scanner sonar-scanner sonar-plugin
+      sonar-maven-plugin github-pages github-tags
+footer: MIT Licensed | Copyright © 2019-present Maksim Kostromin
 ---
 
 # SonarQube Build Breaker 
