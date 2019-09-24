@@ -17,8 +17,8 @@ meta:
 footer: MIT Licensed | Copyright © 2019-present Maksim Kostromin
 ---
 
-# SonarQube Build Breaker 
-SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker)
+# SonarQube Build Breaker
+SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker) [ ![Download](https://api.bintray.com/packages/daggerok/maven/sonar-quality-gates-build-breaker/images/download.svg) ](https://bintray.com/daggerok/maven/sonar-quality-gates-build-breaker/_latestVersion)
 
 [[toc]]
 

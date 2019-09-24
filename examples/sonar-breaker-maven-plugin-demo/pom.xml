@@ -52,12 +52,13 @@
                 <groupId>com.github.daggerok.sonar</groupId>
                 <artifactId>sonar-breaker-maven-plugin</artifactId>
                 <version>${project.version}</version>
-                <!--<executions>
-                    <execution>
-                        <id>sonar-breaker</id>
-                        <goals><goal>analyze</goal></goals>
-                    </execution>
-                </executions>-->
+                <!--
+                <configuration>
+                    <allowFailure>false</allowFailure>
+                    <sonarProjectBaseDir>${maven.multiModuleProjectDirectory}</sonarProjectBaseDir>
+                    <sonarScannerMetadataFilePath>${maven.multiModuleProjectDirectory}/target/sonar/report-task.txt</sonarScannerMetadataFilePath>
+                </configuration>
+                -->
             </plugin>
         </plugins>
     </build>

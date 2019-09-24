@@ -4,7 +4,7 @@ lang: en-US
 ---
 
 # Release and Deploy
-Here are some notes, about how to publish or deploy locally or remotely to github / bintray jcenter 
+Here are some notes, about how to publish or deploy locally or remotely to github / bintray jcenter [ ![Download](https://api.bintray.com/packages/daggerok/maven/sonar-quality-gates-build-breaker/images/download.svg) ](https://bintray.com/daggerok/maven/sonar-quality-gates-build-breaker/_latestVersion)
 
 [[toc]]
 

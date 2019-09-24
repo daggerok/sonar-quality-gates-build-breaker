@@ -23,7 +23,7 @@ public class SonarReportTask {
 
     public static SonarReportTask of(final String filePath) {
         final String path = Optional.ofNullable(filePath)
-                                    .orElse(Config.get(Env.SONAR_REPORT_TASK));
+                                    .orElse(Config.get(Env.SONAR_SCANNER_METADATA_FILE_PATH));
         return new SonarReportTask().withProperties(path);
     }
 
@@ -41,7 +41,7 @@ public class SonarReportTask {
 
     @SneakyThrows
     private SonarReportTask withProperties(final String filePath) {
-        log.debug("Reading {}", filePath);
+        log.debug("Parsing metadata from {} file", filePath);
         // final @Cleanup FileInputStream fileInputStream = new FileInputStream(filePath);
         // final Properties properties = new Properties();
         // properties.load(fileInputStream);
