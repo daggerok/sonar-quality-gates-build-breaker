@@ -8,6 +8,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+    <name>${project.artifactId}</name>
     <description>SonarQube ❤ Build Breaker</description>
     <artifactId>sonar-breaker</artifactId>
     <packaging>jar</packaging>
