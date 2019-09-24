@@ -138,8 +138,7 @@ add according profile
     <id>gpg</id>
     <activation>
         <property>
-            <name>gpg</name>
-            <value>your gpg pass phrase</value>
+            <name>gpg.passphrase</name>
         </property>
     </activation>
     <build>

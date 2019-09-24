@@ -511,12 +511,8 @@
             <id>gpg</id>
             <activation>
                 <property>
-                    <name>gpg</name>
-                </property><!--
-                <property>
-                    <name>gpg</name>
-                    <value>your gpg pass phrase</value>
-                </property>-->
+                    <name>gpg.passphrase</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -533,6 +529,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
