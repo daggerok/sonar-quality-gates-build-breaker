@@ -4,8 +4,8 @@
   <artifactId>sonar-breaker-maven-plugin-demo</artifactId>
   <versioning>
     <versions>
-      <version>0.0.23-SNAPSHOT</version>
+      <version>0.1.3-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20190922190028</lastUpdated>
+    <lastUpdated>20190924183142</lastUpdated>
   </versioning>
 </metadata>

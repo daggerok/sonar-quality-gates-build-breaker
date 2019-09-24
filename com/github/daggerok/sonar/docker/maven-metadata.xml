@@ -4,8 +4,8 @@
   <artifactId>docker</artifactId>
   <versioning>
     <versions>
-      <version>0.0.23-SNAPSHOT</version>
+      <version>0.1.3-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20190922190013</lastUpdated>
+    <lastUpdated>20190924183118</lastUpdated>
   </versioning>
 </metadata>
