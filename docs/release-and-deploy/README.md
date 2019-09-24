@@ -115,6 +115,13 @@ Let's on each created tag trigger bintray jcenter release publication automatica
 
 -->
 
+## Upload Github release
+
+```bash
+./mvnw clean package
+./mvnw -P github-release -pl :sonar-quality-gates-build-breaker
+```
+
 ## Publish artifacts to bintray jcenter
 
 ::: tip NOTE
