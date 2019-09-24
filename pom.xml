@@ -358,12 +358,11 @@
         </profile>
 
         <profile>
-            <id>upload-github-release</id>
+            <id>github-release</id>
             <build>
                 <!--
-                release maven artifacts (mvn deploy -P local-publish) from target/.m2/repository to github repo
-                ./mvnw clean package
-                ./mvnw -P upload-github-release -pl :sonar-quality-gates-build-breaker
+                ./mvnw -DskipTests clean package
+                ./mvnw -P github-release -pl :sonar-quality-gates-build-breaker
                 -->
                 <defaultGoal>de.jutzig:github-release-plugin:${github-release-plugin.version}:release</defaultGoal>
                 <plugins>
@@ -378,6 +377,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <failOnExistingRelease>false</failOnExistingRelease>
                             <overwriteArtifact>true</overwriteArtifact>
                             <description>${project.artifactId} release</description>
                             <releaseName>v${project.version}</releaseName>
@@ -386,13 +386,14 @@
                                 <fileSet>
                                     <directory>${maven.multiModuleProjectDirectory}</directory>
                                     <includes>
-                                        <include>*.md</include>
+                                        <include>README.md</include>
                                     </includes>
                                 </fileSet>
                                 <fileSet>
                                     <directory>${maven.multiModuleProjectDirectory}</directory>
                                     <includes>
                                         <include>**/target/*.jar</include>
+                                        <!--<include>target/.m2/**/*.jar</include>-->
                                     </includes>
                                 </fileSet>
                             </fileSets>

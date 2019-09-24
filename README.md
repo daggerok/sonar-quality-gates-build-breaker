@@ -13,7 +13,7 @@ _Easy as 1-2-3_
                <plugin>
                    <groupId>com.github.daggerok.sonar</groupId>
                    <artifactId>sonar-breaker-maven-plugin</artifactId>
-                   <version>${project.version}</version>
+                   <version>1.0.0</version>
                    <!--
                    <configuration>
                        <delay>1</delay>
