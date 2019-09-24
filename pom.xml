@@ -7,7 +7,7 @@
     <description>SonarQube 💥 Build Breaker - fail pipeline builds according to its Quality Gates️ analysis</description>
     <groupId>com.github.daggerok.sonar</groupId>
     <artifactId>sonar-quality-gates-build-breaker</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -222,12 +222,6 @@
                 </executions>
             </plugin>
 
-            <!--
-                gpg &#45;&#45;version
-                brew reinstall gpg
-                gpg &#45;&#45;gen-key
-                gpg &#45;&#45;list-keys &#45;&#45;keyid-format short
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
