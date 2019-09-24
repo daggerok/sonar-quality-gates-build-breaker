@@ -4,8 +4,8 @@
 ###
 ARGS=${1:-}
 if [ -z "${GPG_PASSPHRASE}" ]; then
-  echo 'please enter your gpg passphrase: '
-  read GPG_PASSPHRASE
+  echo 'please provide GPG_PASSPHRASE env variable'
+  exit -1
 fi
 ROOT_PROJECT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "${ROOT_PROJECT_DIR}" && ./mvnw release:prepare release:perform -B -s .mvn/settings.xml \
