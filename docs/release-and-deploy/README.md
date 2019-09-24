@@ -24,6 +24,12 @@ mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorV
 mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} versions:commit
 ```
 
+_example_
+
+```bash
+mvn build-helper:parse-version versions:set -DnewVersion=1.2.3-SNAPSHOT versions:commit
+```
+
 ## Publish artifacts locally
 
 ::: tip NOTE
@@ -224,7 +230,7 @@ bintray jcenter maven repository_
 
 -->
 
-_or more verbosely_
+_more verbosely_
 
 ```bash
 ./mvnw release:prepare release:perform -B -s .mvn/settings.xml \
@@ -235,4 +241,10 @@ _or more verbosely_
   -DpreparationGoals="clean" \
   -DcompletionGoals="clean" \
   -Dresume=false
+```
+
+_easiest way to release locally_
+
+```bash
+GPG_PASSPHRASE=MyGpgPassPhraseForSonarBreaker bash ./bin/bintray-all.sh
 ```
