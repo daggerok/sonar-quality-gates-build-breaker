@@ -50,7 +50,6 @@
         <maven-jxr-plugin.version>3.0.0</maven-jxr-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-        <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
         <github-release-plugin.version>1.3.0</github-release-plugin.version>
@@ -272,24 +271,6 @@
                         <finalName>${project.artifactId}-${project.version}-all</finalName>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>com.github.chrisdchristo</groupId>
-                    <artifactId>capsule-maven-plugin</artifactId>
-                    <version>${capsule-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>build</goal>
-                            </goals>
-                            <configuration>
-                                <fileDesc>-all</fileDesc>
-                                <appClass>${mainClass}</appClass>
-                                <type>fat</type>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -337,11 +318,6 @@
                             <tagNameFormat>@{project.version}</tagNameFormat>
                             <generateReleasePoms>false</generateReleasePoms>
                             <resume>false</resume>
-                            <!--<arguments>-DskipTests -Dmaven.deploy.skip=true -Plocal-release,local-publish</arguments>
-                            <arguments>-DskipTests -Dmaven.deploy.skip=true</arguments>--> <!--NOSONAR-->
-                            <!--<releaseProfiles>local-publish</releaseProfiles>
-                            <preparationGoals>clean</preparationGoals>
-                            <completionGoals>clean</completionGoals>-->
                         </configuration>
                     </plugin>
                 </plugins>
@@ -379,35 +355,6 @@
                     <url>${project.scm.developerConnection}</url>
                 </site>
             </distributionManagement>
-        </profile>
-
-        <profile>
-            <id>bintray-publish</id>
-            <build>
-                <!--
-                ./mvnw -B release:clean release:prepare release:perform \
-                       -P ,local-publish \
-                       -Dmaven.deploy.skip=true \
-                       -s .m2/settings.xml \
-                       -Dresume=false
-                -->
-                <defaultGoal>release:clean release:prepare release:perform</defaultGoal>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>${maven-release-plugin.version}</version>
-                        <configuration>
-                            <!--<arguments>-DskipTests</arguments>-->
-                            <autoVersionSubmodules>true</autoVersionSubmodules>
-                            <tagNameFormat>@{project.version}</tagNameFormat>
-                            <generateReleasePoms>false</generateReleasePoms>
-                            <preparationGoals>clean</preparationGoals>
-                            <completionGoals>clean</completionGoals>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
 
         <profile>
@@ -453,6 +400,81 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <profile>
+            <id>bintray-publish</id>
+            <build>
+                <!--
+                ./mvnw -B release:clean release:prepare release:perform \
+                       -P ,local-publish \
+                       -Dmaven.deploy.skip=true \
+                       -s .m2/settings.xml \
+                       -Dresume=false
+                -->
+                <defaultGoal>release:clean release:prepare release:perform</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>${maven-release-plugin.version}</version>
+                        <configuration>
+                            <!--<arguments>-DskipTests</arguments>-->
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <tagNameFormat>@{project.version}</tagNameFormat>
+                            <generateReleasePoms>false</generateReleasePoms>
+                            <preparationGoals>clean</preparationGoals>
+                            <completionGoals>clean</completionGoals>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                            <failOnWarnings>false</failOnWarnings>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven-source-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <configuration>
+                            <minmemory>128m</minmemory>
+                            <maxmemory>512</maxmemory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
         </profile>
 
         <profile>
@@ -511,54 +533,8 @@
                             <passphrase>${env.GPG_PASSPHRASE}</passphrase>
                         </configuration>
                     </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                            <failOnWarnings>false</failOnWarnings>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                 </plugins>
             </build>
-
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
-                        <configuration>
-                            <minmemory>128m</minmemory>
-                            <maxmemory>512</maxmemory>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
         </profile>
     </profiles>
 

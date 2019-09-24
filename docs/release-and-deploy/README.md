@@ -8,6 +8,8 @@ Here are some notes, about how to publish or deploy locally or remotely to githu
 
 [[toc]]
 
+## Versions
+
 <!--
 
 ## Manual (by hands) job
