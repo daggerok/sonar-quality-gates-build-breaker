@@ -14,6 +14,16 @@ Here are some notes, about how to publish or deploy locally or remotely to githu
 
 -->
 
+First of all, if you just wanna increment version, you can do it with `versions-maven-plugin` like so:
+
+```bash
+mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} versions:commit
+```
+
+```cmd
+mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} versions:commit
+```
+
 ## Publish artifacts locally
 
 ::: tip NOTE

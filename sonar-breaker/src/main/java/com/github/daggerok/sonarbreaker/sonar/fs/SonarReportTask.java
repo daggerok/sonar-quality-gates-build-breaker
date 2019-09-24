@@ -41,7 +41,7 @@ public class SonarReportTask {
 
     @SneakyThrows
     private SonarReportTask withProperties(final String filePath) {
-        log.debug("Parsing metadata from {} file", filePath);
+        log.debug("Parse sonar analysis task metadata: {}", filePath);
         // final @Cleanup FileInputStream fileInputStream = new FileInputStream(filePath);
         // final Properties properties = new Properties();
         // properties.load(fileInputStream);

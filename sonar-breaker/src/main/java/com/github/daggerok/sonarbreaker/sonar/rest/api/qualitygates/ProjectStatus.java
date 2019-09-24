@@ -39,7 +39,7 @@ public class ProjectStatus {
 
         return conditions.stream()
                          .filter(withIncludesAndExcludes)
-                         .peek(c -> log.error("{} {} ({})", c.getMetricKey(), c.getActualValue(), c.getStatus()))
+                         .peek(c -> log.error("{}: {} -> {}", c.getStatus(), c.getMetricKey(), c.getActualValue()))
                          .collect(Collectors.toList());
     }
 }

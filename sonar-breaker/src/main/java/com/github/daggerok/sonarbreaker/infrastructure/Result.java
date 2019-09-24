@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Log4j2
+@Getter
 @RequiredArgsConstructor
 public enum Result {
 
@@ -15,14 +16,11 @@ public enum Result {
     USAGE("BUILD FAILED! Usage: java -jar verify-sonar.jar path/to/sonar/report-task.txt", 1),
     TIMEOUT_EXCEEDED("BUILD FAILED! Timeout exceeded", 2),
     QUALITY_GATES_RESPONSE_FAILED("BUILD FAILED! Quality gates response failed", 3),
-    QUALITY_GATES_EMPTY_RESPONSE("BUILD FAILED! Quality gates returns empty response", 4),
-    QUALITY_GATES_STATUS_FAILED("BUILD FAILED! No quality gates status found", 5),
-    QUALITY_GATES_FAILED("BUILD FAILED! Verify quality gates status", 6),
+    QUALITY_GATES_STATUS_FAILED("BUILD FAILED! No quality gates status found", 4),
+    QUALITY_GATES_FAILED("BUILD FAILED! Verify quality gates status", 5),
     ;
 
     private final String message;
-
-    @Getter
     private final int exitCode;
 
     private void withErrors(final String... withErrors) {
@@ -34,13 +32,12 @@ public enum Result {
 
     public void fail(final String... withErrors) {
         withErrors(withErrors);
-        log.error(message);
-        System.exit(exitCode);
-    }
+        if (withErrors.length == 0) log.error(message);
+        else log.error(message);
 
-    public void complete(final String... withErrors) {
-        withErrors(withErrors);
-        log.info(BUILD_SUCCESS.message);
-        System.exit(BUILD_SUCCESS.exitCode);
+        final boolean shouldExitOtherwiseThrowAnError = Boolean.parseBoolean(Config.get(Env.SONAR_BREAKER_STANDALONE));
+        if (shouldExitOtherwiseThrowAnError) System.exit(exitCode);
+
+        throw new SonarBreakerException(String.join(", ", withErrors));
     }
 }

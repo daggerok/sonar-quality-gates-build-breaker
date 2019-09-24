@@ -4,6 +4,7 @@ import com.github.daggerok.sonarbreaker.SonarBreaker;
 import io.vavr.collection.HashMap;
 import io.vavr.control.Try;
 import lombok.extern.log4j.Log4j2;
+import lombok.val;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -14,7 +15,6 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.github.daggerok.sonarbreaker.infrastructure.Env.*;
@@ -24,7 +24,7 @@ import static io.vavr.Predicates.not;
  * Waiting for sonar:sonar analysis completion and failing execution in case if
  * any related to current project Quality Gates metrics wont accepts defined thresholds
  *
- * @goal sonar-breaker:analyze
+ * goal sonar-breaker:analyze
  */
 @Mojo(
         name = "analyze",
@@ -36,6 +36,13 @@ import static io.vavr.Predicates.not;
 )
 @Log4j2
 public class SonarBreakerAnalyzer extends AbstractMojo {
+
+    /**
+     * Configuring sonar-breaker-maven-plugin execute sonar-breaker in a standalone mode.
+     * If present, maven build will be terminated from sonar-breaker process, not maven
+     */
+    @Parameter(property = "sonar.breaker.standalone", defaultValue = "false")
+    private String sonarBreakerStandalone;
 
     /**
      * Max number of retries to be attempt for SonarQube REST API
@@ -110,49 +117,39 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
         mapPluginProps();
 
         final File sonarReportFile = findSonarQubeReportTaskTxtFile();
-        final Function<String, MojoExecutionException> error = what -> {
-            if (log.isWarnEnabled()) log.warn("File {} cannot be {}.", sonarReportFile, what);
-            return new MojoExecutionException(String.join(
-                    "", "File ", sonarReportFile.getPath(), " cannot be ", what, ". ",
-                    "If your SonarQube setup uses different file, then you can use sonar.scanner.metadataFilePath ",
-                    "system property or <sonar.scanner.metadataFilePath/> plugin configuration."
-            ));
-        };
-
         if (!sonarReportFile.exists()) {
-            if (!allowFailure) throw error.apply("found");
-            error.apply("found").getLocalizedMessage();
-            log.warn("Skipping build allowed to fail...");
+            final val notFoundError = error(sonarReportFile, "found");
+            if (!allowFailure) throw notFoundError;
+            log.warn("Skipping build which allowed to fail...");
             return;
         }
-
         if (!sonarReportFile.canRead()) {
-            if (!allowFailure) throw error.apply("read");
-            error.apply("read").getLocalizedMessage();
-            log.warn("Skipping build allowed to fail...");
+            final val cannotReadError = error(sonarReportFile, "read");
+            if (!allowFailure) throw cannotReadError;
+            log.warn("Skipping build allowed to fail: {}", cannotReadError.getLocalizedMessage());
             return;
         }
 
         final String path = sonarReportFile.getAbsolutePath();
-        log.debug("Resolved metadata file: {}", () -> path);
+        log.debug("Metadata file resolved: {}", () -> path);
 
         final Try<Void> aTry = Try.run(() -> SonarBreaker.main(Stream.of(path).toArray(String[]::new)))
-                                  .onFailure(e -> log.error("{}\n{}", e.getLocalizedMessage(), e))
-                                  .andFinally(() -> log.info(() -> "Analysis done!"));
-        if (aTry.isSuccess()) {
-            aTry.get();
-            return;
-        }
+                                  .onFailure(e -> log.error("{}", e.getLocalizedMessage()));
+        if (aTry.isSuccess()) return;
 
         final Throwable cause = aTry.getCause();
         final String message = cause.getLocalizedMessage();
-
-        if (allowFailure) log.warn("Ignored failed execution: {}", message, cause);
-        else throw new MojoExecutionException(String.join(" ", "sonar-breaker:analyze goal failed", message));
+        final String error = String.join(" ", "sonar-breaker:analyze goal failed", message);
+        if (!allowFailure) throw new MojoExecutionException(error);
+        log.warn("Build is allowed to fail: {}", error);
     }
 
+    /**
+     * Set all from plugin props in Java VM System as properties
+     */
     private void mapPluginProps() {
-        HashMap.of(SONAR_BREAKER_DELAY, sonarBreakerDelay,
+        HashMap.of(SONAR_BREAKER_STANDALONE, sonarBreakerStandalone,
+                   SONAR_BREAKER_DELAY, sonarBreakerDelay,
                    SONAR_BREAKER_RETRY, sonarBreakerRetry,
                    SONAR_BREAKER_METRICS_INCLUDES, sonarBreakerMetricsIncludes,
                    SONAR_BREAKER_METRICS_EXCLUDES, sonarBreakerMetricsExcludes)
@@ -166,5 +163,14 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
         return Optional.ofNullable(sonarScannerMetadataFilePath)
                        .orElse(Paths.get(sonarProjectBaseDir, "target", "sonar", "report-task.txt")
                                     .toFile());
+    }
+
+    private static MojoExecutionException error(File metadataFilePath, String what) {
+        if (log.isWarnEnabled()) log.warn("File {} cannot be {}.", metadataFilePath, what);
+        final String fullErrorMessage = String.join(
+                "", "File ", metadataFilePath.getPath(), " cannot be ", what, ". ",
+                "If your SonarQube setup uses different file, then you can use sonar.scanner.metadataFilePath ",
+                "system property or <sonar.scanner.metadataFilePath/> plugin configuration.");
+        return new MojoExecutionException(fullErrorMessage);
     }
 }

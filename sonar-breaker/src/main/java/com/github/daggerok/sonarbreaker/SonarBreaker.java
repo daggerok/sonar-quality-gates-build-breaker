@@ -3,6 +3,7 @@ package com.github.daggerok.sonarbreaker;
 import com.github.daggerok.sonarbreaker.infrastructure.Config;
 import com.github.daggerok.sonarbreaker.infrastructure.Env;
 import com.github.daggerok.sonarbreaker.infrastructure.Result;
+import com.github.daggerok.sonarbreaker.infrastructure.SonarBreakerException;
 import com.github.daggerok.sonarbreaker.sonar.fs.SonarReportTask;
 import com.github.daggerok.sonarbreaker.sonar.rest.SonarClient;
 import com.github.daggerok.sonarbreaker.sonar.rest.api.ce.TaskResponse;
@@ -85,7 +86,7 @@ public class SonarBreaker {
 
         final val call = sonar.getProjectStatus(analysisId);
         final Response<ProjectStatusResponse> response = call.execute();
-        log.debug("Quality gates status available here: {}", call.request().url());
+        log.debug("SonarQube quality gates analysis complete: {}", call.request().url());
 
         if (!response.isSuccessful()) {
             final String error = format("%n%s", requireNonNull(response.errorBody(), "response failed.").string());
@@ -93,33 +94,26 @@ public class SonarBreaker {
             return;
         }
 
-        final val body = response.body();
-        final val maybeBody = Optional.ofNullable(body);
-
-        if (!maybeBody.isPresent()) {
-            Result.QUALITY_GATES_EMPTY_RESPONSE.fail();
-            return;
-        }
-
-        final val maybeProjectStatus = maybeBody.map(ProjectStatusResponse::getProjectStatus);
-        final val maybeStatus = maybeProjectStatus.map(ProjectStatus::getStatus);
+        final val maybePs = Optional.ofNullable(response.body()).map(ProjectStatusResponse::getProjectStatus);
+        final val maybeStatus = maybePs.map(ProjectStatus::getStatus);
 
         if (!maybeStatus.isPresent()) {
             Result.QUALITY_GATES_STATUS_FAILED.fail();
             return;
         }
 
-        final String status = maybeStatus.get();
-        final val projectStatus = maybeProjectStatus.get();
+        final String status = maybeStatus.orElseThrow(() -> new SonarBreakerException("Cannot get status."));
+        final val projectStatus = maybePs.orElseThrow(() -> new SonarBreakerException("Cannot get project status"));
 
         if (!"OK".equalsIgnoreCase(status)) {
-            final val hasErrors = projectStatus.failedConditions().size() > 0;
-            if (hasErrors) {
-                Result.QUALITY_GATES_FAILED.fail();
+            final int failures = projectStatus.failedConditions().size();
+            if (failures > 0) {
+                final String errorMessage = format("%d %s needs to be fixed", failures, failures > 1 ? "issues" : "issue");
+                Result.QUALITY_GATES_FAILED.fail(errorMessage);
                 return;
             }
         }
 
-        Result.BUILD_SUCCESS.complete();
+        log.info(Result.BUILD_SUCCESS.getMessage());
     }
 }
