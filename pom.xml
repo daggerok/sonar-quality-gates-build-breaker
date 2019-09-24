@@ -221,29 +221,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--
-            gpg &#45;&#45;gen-key
-            gpg &#45;&#45;list-secret-keys
-            # find: 7D2BAF1CF37B13E2069D6956105BD0E739499BDB in putput
-            gpg &#45;&#45;keyserver hkp://pgp.mit.edu &#45;&#45;send-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-            gpg &#45;&#45;keyserver hkp://pgp.mit.edu &#45;&#45;recv-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-            -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>${maven-gpg-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -525,6 +502,37 @@
                                 </fileSet>
                             </fileSets>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>gpg</id>
+            <activation>
+                <property>
+                    <name>gpg</name>
+                </property><!--
+                <property>
+                    <name>gpg</name>
+                    <value>your gpg pass phrase</value>
+                </property>-->
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

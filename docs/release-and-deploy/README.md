@@ -119,6 +119,56 @@ _Workflow_
 * job should publish artifacts to own bintray jcenter maven repository
 * after it can be released manually in bintray web UI and synced with maven central
 
+_gpg_
+
+```bash
+gpg --gen-key
+gpg --list-secret-keys
+# find: 7D2BAF1CF37B13E2069D6956105BD0E739499BDB in putput
+gpg --keyserver hkp://pgp.mit.edu --send-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+gpg --keyserver hkp://pgp.mit.edu --recv-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+```
+
+_avoid prompting gog passphrase_
+
+add according profile
+
+```xml
+<profile>
+    <id>gpg</id>
+    <activation>
+        <property>
+            <name>gpg</name>
+            <value>your gpg pass phrase</value>
+        </property>
+    </activation>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</profile>
+```
+
+do not forget pass it via system properties (important, notice `-Darguments=...`)
+
+```bash
+mvn -Dgpg.passphrase=XYZ -Darguments="-Dgpg.passphrase=XYZ" ...
+```
+
 _first of all create own bintray jcenter `daggerok/maven` repository_
 
 * Go to https://bintray.com/daggerok

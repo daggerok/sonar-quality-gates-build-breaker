@@ -3,8 +3,15 @@
 # bash ./bin/local-publish.sh
 ###
 ARGS=${1:-}
+if [ -z "${GPG_PASSPHRASE}" ]; then
+  echo 'please enter your gpg passphrase: '
+  read GPG_PASSPHRASE
+fi
 ROOT_PROJECT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 cd "${ROOT_PROJECT_DIR}" && ./mvnw release:prepare release:perform -B -s .mvn/settings.xml \
-  -DskipTests -Darguments="-DskipTests" -DtagNameFormat="@{project.version}" \
-  -Dresume=false -DautoVersionSubmodules=true -DgenerateReleasePoms=false \
-  -DpreparationGoals="clean" -DcompletionGoals="clean install"
+  -DskipTests -Darguments="-DskipTests -Dgpg.passphrase=${GPG_PASSPHRASE}" \
+  -Dgpg.passphrase=${GPG_PASSPHRASE} -DautoVersionSubmodules=true \
+  -Dresume=false  -DgenerateReleasePoms=false \
+  -DtagNameFormat="@{project.version}" \
+  -DcompletionGoals="clean install" \
+  -DpreparationGoals="clean"
