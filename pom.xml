@@ -3,6 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <name>${project.artifactId}</name>
+    <url>https://github.com/daggerok/</url>
     <description>SonarQube 💥 Build Breaker - fail pipeline builds according to its Quality Gates️ analysis</description>
     <groupId>com.github.daggerok.sonar</groupId>
     <artifactId>sonar-quality-gates-build-breaker</artifactId>
@@ -45,6 +46,7 @@
         <log4j.version>2.12.1</log4j.version>
         <lombok.version>1.18.10</lombok.version>
         <retrofit.version>2.6.1</retrofit.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jxr-plugin.version>3.0.0</maven-jxr-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
@@ -63,6 +65,8 @@
         <developer>
             <name>Maksim Kostromin</name>
             <email>daggerok@gmail.com</email>
+            <organization>Sets of open source Maksim Kostromin aka daggerok projects</organization>
+            <organizationUrl>https://github.com/daggerok/</organizationUrl>
         </developer>
     </developers>
 
@@ -213,6 +217,21 @@
                         <id>attach-sources</id>
                         <goals>
                             <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${maven-gpg-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
