@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface SonarClient {
+public interface SonarRestClient {
     @GET("/api/qualitygates/project_status")
     Call<ProjectStatusResponse> getProjectStatus(@Query("analysisId") String analysisId);
 

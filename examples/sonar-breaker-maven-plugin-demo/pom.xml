@@ -53,13 +53,27 @@
                 <groupId>com.github.daggerok.sonar</groupId>
                 <artifactId>sonar-breaker-maven-plugin</artifactId>
                 <version>${project.version}</version>
-                <!--
                 <configuration>
+                    <!-- shorter parameters aliases:
+                    <delay>1</delay>
+                    <retry>100</retry>
+                    <standalone>false</standalone>
                     <allowFailure>false</allowFailure>
+                    <metricsExcludes>new_coverage,new_violations</metricsExcludes>
+                    <metricsIncludes>new_coverage,new_violations</metricsIncludes>
+                    <projectBaseDir>${maven.multiModuleProjectDirectory}</projectBaseDir>
+                    <metadataFilePath>${maven.multiModuleProjectDirectory}/target/sonar/report-task.txt</metadataFilePath>
+                    -->
+                    <!-- parameters:
+                    <sonarBreakerDelay>1</sonarBreakerDelay>
+                    <sonarBreakerRetry>100</sonarBreakerRetry>
+                    <sonarBreakerStandalone>false</sonarBreakerStandalone>
                     <sonarProjectBaseDir>${maven.multiModuleProjectDirectory}</sonarProjectBaseDir>
+                    <sonarBreakerMetricsExcludes>new_coverage,new_violations</sonarBreakerMetricsExcludes>
+                    <sonarBreakerMetricsIncludes>new_coverage,new_violations</sonarBreakerMetricsIncludes>
                     <sonarScannerMetadataFilePath>${maven.multiModuleProjectDirectory}/target/sonar/report-task.txt</sonarScannerMetadataFilePath>
+                    -->
                 </configuration>
-                -->
             </plugin>
         </plugins>
     </build>

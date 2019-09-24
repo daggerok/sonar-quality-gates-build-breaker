@@ -39,7 +39,9 @@ public class ProjectStatus {
 
         return conditions.stream()
                          .filter(withIncludesAndExcludes)
-                         .peek(c -> log.error("{}: {} -> {}", c.getStatus(), c.getMetricKey(), c.getActualValue()))
+                         .peek(c -> log.error("Metric {}: {} -> {}. Error threshold: {}",
+                                              c.getStatus().toLowerCase(), c.getMetricKey(),
+                                              c.getActualValue(), c.getErrorThreshold()))
                          .collect(Collectors.toList());
     }
 }

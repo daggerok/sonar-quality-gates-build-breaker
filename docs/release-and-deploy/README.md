@@ -135,10 +135,10 @@ add according profile
 
 ```xml
 <profile>
-    <id>gpg</id>
+    <id>read gpg.passphrase from environment variable</id>
     <activation>
         <property>
-            <name>gpg.passphrase</name>
+            <name>env.GPG_PASSPHRASE</name>
         </property>
     </activation>
     <build>
@@ -156,16 +156,13 @@ add according profile
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <passphrase>${env.GPG_PASSPHRASE}</passphrase>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 </profile>
-```
-
-do not forget pass it via system properties (important, notice `-Darguments=...`)
-
-```bash
-mvn -Dgpg.passphrase=XYZ -Darguments="-Dgpg.passphrase=XYZ" ...
 ```
 
 _first of all create own bintray jcenter `daggerok/maven` repository_

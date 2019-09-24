@@ -17,14 +17,14 @@ import java.util.stream.Stream;
 
 @Log4j2
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SonarReportTask {
+public class SonarMetadata {
 
     private final Map<String, String> dataHolder = new ConcurrentHashMap<>();
 
-    public static SonarReportTask of(final String filePath) {
+    public static SonarMetadata of(final String filePath) {
         final String path = Optional.ofNullable(filePath)
                                     .orElse(Config.get(Env.SONAR_SCANNER_METADATA_FILE_PATH));
-        return new SonarReportTask().withProperties(path);
+        return new SonarMetadata().withProperties(path);
     }
 
     public String getServerUrl() {
@@ -40,7 +40,7 @@ public class SonarReportTask {
     }
 
     @SneakyThrows
-    private SonarReportTask withProperties(final String filePath) {
+    private SonarMetadata withProperties(final String filePath) {
         log.debug("Parse sonar analysis task metadata: {}", filePath);
         // final @Cleanup FileInputStream fileInputStream = new FileInputStream(filePath);
         // final Properties properties = new Properties();

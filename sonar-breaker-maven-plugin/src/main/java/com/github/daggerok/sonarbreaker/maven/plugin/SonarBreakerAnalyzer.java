@@ -41,14 +41,14 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * Configuring sonar-breaker-maven-plugin execute sonar-breaker in a standalone mode.
      * If present, maven build will be terminated from sonar-breaker process, not maven
      */
-    @Parameter(property = "sonar.breaker.standalone", defaultValue = "false")
+    @Parameter(property = "sonar.breaker.standalone", alias = "standalone", defaultValue = "false")
     private String sonarBreakerStandalone;
 
     /**
      * Max number of retries to be attempt for SonarQube REST API
      * calls during waiting for analysis completion
      */
-    @Parameter(property = "sonar.breaker.retry")
+    @Parameter(property = "sonar.breaker.retry", alias = "retry")
     private String sonarBreakerRetry;
 
     /**
@@ -56,23 +56,24 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * to be sent to SonarQube REST API during waiting for analysis
      * completion
      */
-    @Parameter(property = "sonar.breaker.delay")
+    @Parameter(property = "sonar.breaker.delay", alias = "delay")
     private String sonarBreakerDelay;
 
     /**
-     * List of metrics divided by coma without spaces in between
-     * from Quality Gates check to be included in result if
-     * their status is ERROR
+     * List of metrics divided by coma without spaces will be included
+     * for Quality Gates check results if status is ERROR.
+     * If not present all issues are going to be analyzed and causing
+     * build failure if actual value will be equals to ERROR
      */
-    @Parameter(property = "sonar.breaker.metrics.includes")
+    @Parameter(property = "sonar.breaker.metrics.includes", alias = "metricsIncludes")
     private String sonarBreakerMetricsIncludes;
 
     /**
      * List of metrics divided by coma without spaces in between to
-     * be excluded from Quality Gates check results even if status
-     * is ERROR
+     * be excluded from Quality Gates check results even if their
+     * actual status is ERROR
      */
-    @Parameter(property = "sonar.breaker.metrics.excludes")
+    @Parameter(property = "sonar.breaker.metrics.excludes", alias = "metricsExcludes")
     private String sonarBreakerMetricsExcludes;
 
     /**
@@ -82,7 +83,11 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * Default value: ${mavep.multiModuleProjectDirectory}
      * Requires: maven >= 3.3.9
      */
-    @Parameter(property = "sonar.projectBaseDir", defaultValue = "${maven.multiModuleProjectDirectory}")
+    @Parameter(
+            alias = "projectBaseDir",
+            property = "sonar.projectBaseDir",
+            defaultValue = "${maven.multiModuleProjectDirectory}"
+    )
     private String sonarProjectBaseDir;
 
     /**
@@ -93,8 +98,7 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * Fallback value: ${sonar.projectBaseDir}/target/sonar/report-task.txt
      * Requires: maven >= 3.3.9
      */
-    @Parameter(property = "sonar.scanner.metadataFilePath"/*,
-               defaultValue = "${maven.multiModuleProjectDirectory}/target/sonar/report-task.txt"*/)
+    @Parameter(property = "sonar.scanner.metadataFilePath", alias = "metadataFilePath")
     private File sonarScannerMetadataFilePath;
 
     /**
@@ -102,7 +106,7 @@ public class SonarBreakerAnalyzer extends AbstractMojo {
      * <hr/>
      * Default value: false
      */
-    @Parameter(property = "sonar.breaker.failOnError", defaultValue = "false")
+    @Parameter(property = "sonar.breaker.allowFailure", defaultValue = "false")
     private boolean allowFailure;
 
     /**
