@@ -49,10 +49,10 @@ _Easy as 1-2-3_
   ```
 
 * download latest
-  [sonar-breaker](http://repo1.maven.org/maven2/com/github/daggerok/sonar/sonar-breaker/0.1.5/sonar-breaker-0.1.5.jar)
+  [sonar-breaker](https://repo1.maven.org/maven2/com/github/daggerok/sonar/sonar-breaker/1.0.1/sonar-breaker-1.0.1.jar)
   executable jar file.
   ```bash
-  wget -O sb.jar http://repo1.maven.org/maven2/com/github/daggerok/sonar/sonar-breaker/0.1.5/sonar-breaker-0.1.5.jar
+  wget -O sb.jar https://repo1.maven.org/maven2/com/github/daggerok/sonar/sonar-breaker/1.0.1/sonar-breaker-1.0.1.jar
   ```
 
 * finally run sonar-breaker analysis:
