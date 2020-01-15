@@ -1,6 +1,8 @@
 # SonarQube 💥 Build Breaker [![Build Status](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker.svg?branch=master)](https://travis-ci.org/daggerok/sonar-quality-gates-build-breaker) [ ![Download](https://api.bintray.com/packages/daggerok/maven/sonar-quality-gates-build-breaker/images/download.svg) ](https://bintray.com/daggerok/maven/sonar-quality-gates-build-breaker/_latestVersion) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.daggerok.sonar/sonar-quality-gates-build-breaker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.daggerok.sonar/sonar-quality-gates-build-breaker)
 SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed
 
+![SonarQube 💥 Build Breaker](sonar-breaker.png)
+
 _Easy as 1-2-3_
 
 ## Maven plugin quick start
