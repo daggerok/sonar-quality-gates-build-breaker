@@ -52,7 +52,7 @@
             <plugin>
                 <groupId>com.github.daggerok.sonar</groupId>
                 <artifactId>sonar-breaker-maven-plugin</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.1</version>
                 <configuration>
                     <!-- shorter parameters aliases:
                     <delay>1</delay>

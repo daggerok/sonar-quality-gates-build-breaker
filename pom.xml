@@ -408,7 +408,7 @@
             <build>
                 <!--
                 ./mvnw -B release:clean release:prepare release:perform \
-                       -P ,local-publish \
+                       -P local-publish \
                        -Dmaven.deploy.skip=true \
                        -s .m2/settings.xml \
                        -Dresume=false
@@ -538,13 +538,5 @@
             </build>
         </profile>
     </profiles>
-
-    <distributionManagement>
-        <repository>
-            <id>bintray-daggerok-maven</id>
-            <name>daggerok-maven</name>
-            <url>https://api.bintray.com/maven/daggerok/maven/sonar-quality-gates-build-breaker/;publish=1</url>
-        </repository>
-    </distributionManagement>
 
 </project>
