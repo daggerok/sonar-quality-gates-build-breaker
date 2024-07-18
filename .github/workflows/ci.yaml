@@ -12,8 +12,16 @@ jobs:
       #    github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-java@v4
         with:
-          distribution: 'corretto'
           java-version: 8
+          distribution: 'corretto'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.n*
+            ~/.m2/repository
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml', '**/package.json', '**/docker-compose.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
       - run: |
           echo "JAVA_HOME: $JAVA_HOME"
           java -version
