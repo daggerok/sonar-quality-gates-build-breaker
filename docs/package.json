@@ -4,8 +4,8 @@
   "description": "SonarQube Build Breaker designed to fail SonarQube analysis during CI pipeline build if quality grates not passed",
   "main": "index.js",
   "scripts": {
-    "start": "vuepress dev --port 5000 .",
-    "build": "vuepress build --no-cache .",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress dev --port 5000 .",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vuepress build .",
     "gh-pages": "cross-env BASE_HREF='/sonar-quality-gates-build-breaker/' npm run build",
     "test": "npm run build"
   },
@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/daggerok/sonar-quality-gates-build-breaker#readme",
   "devDependencies": {
-    "cross-env": "5.2.1",
+    "cross-env": "7.0.3",
     "markdown-it-vuepress-code-snippet-enhanced": "1.0.1",
-    "vuepress": "1.0.4"
+    "vuepress": "1.9.10"
   }
 }

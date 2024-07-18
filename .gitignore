@@ -11,6 +11,8 @@ out/
 *.log*
 **/node_modules/**
 **/.vuepress/dist/**
+docs/.vuepress/.temp/
+docs/.vuepress/.cache/
 
 ### STS ###
 .apt_generated
