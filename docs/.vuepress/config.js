@@ -32,6 +32,5 @@ module.exports = {
         '@vuepress/last-updated',
         '@vuepress/medium-zoom',
         '@vuepress/nprogress',
-        '@vuepress/nprogress',
     ],
 };
